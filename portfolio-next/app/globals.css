@@ -1,0 +1,235 @@
+/* ─── Design tokens ──────────────────────────────────────────── */
+:root {
+  --background-color: #0b4f6c;
+  --text-color: #fbfbff;
+  --secondary-bg-color: #7E1946;
+  --secondary-text-color: #FBFBFF;
+  --highlight-text-color: #88ce02;
+  --bg-gradient: linear-gradient(to bottom right, #0b4f6c, #7E1946);
+}
+
+/* ─── Reset ──────────────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+body {
+  background-image: var(--bg-gradient);
+  color: var(--text-color);
+  font-size: calc(15px + 0.390625vw);
+}
+
+h1, h2, h3, h4, h5, h6 { font-weight: bold; }
+
+p {
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+  line-height: 1.8;
+}
+
+a {
+  color: var(--highlight-text-color);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+img { max-width: 100%; }
+
+iframe { max-width: 100%; }
+
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ─── Bootstrap overrides ────────────────────────────────────── */
+.dropdown-menu {
+  --bs-dropdown-bg: var(--secondary-bg-color);
+  --bs-dropdown-link-color: var(--text-color);
+}
+
+.card {
+  --bs-card-bg: #2525256e;
+  --bs-card-color: var(--text-color);
+  border: none;
+}
+.card > img {
+  object-fit: cover;
+  height: 15rem;
+}
+
+.list-group {
+  --bs-list-group-color: var(--text-color);
+  --bs-list-group-bg: none;
+  padding-top: 2rem;
+}
+
+/* ─── Layout sections ────────────────────────────────────────── */
+.container-fluid {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+#footer {
+  background-color: var(--background-color);
+  color: var(--secondary-text-color);
+}
+
+#header {
+  background-image: url("/assets/img/back.webp");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--secondary-text-color);
+  height: 100vh;
+}
+
+.header-bg {
+  background-image: linear-gradient(to bottom, #00000033, #00000096);
+  height: 100%;
+  position: absolute;
+  z-index: 0;
+}
+
+#title {
+  margin-top: 3rem;
+  z-index: 1;
+}
+
+.logo {
+  height: 4rem;
+  filter: invert(100%) sepia(61%) saturate(1911%) hue-rotate(180deg) brightness(107%) contrast(105%);
+}
+
+.content-item {
+  margin-top: 2rem;
+  min-height: 70vh;
+}
+
+#projekte { margin-top: 10rem; }
+
+#leben { overflow: hidden; }
+
+.portrait { border-radius: 15px; }
+.img-fluid { border-radius: 15px; }
+
+#video {
+  max-width: 100%;
+  height: max-content;
+}
+
+.smallertext {
+  font-weight: 100;
+  font-variant: small-caps;
+  margin-left: 1rem;
+}
+
+/* ─── Back-to-top button ─────────────────────────────────────── */
+#topButton {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 99;
+  display: none;
+  transition: all .25s ease-in-out;
+  margin-bottom: 5rem;
+  padding-right: 5rem;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border: none;
+  width: 6rem;
+  background-color: #8c86aa93;
+}
+
+#topicon {
+  margin: 1rem;
+  height: 100%;
+  width: 2rem;
+}
+
+/* ─── Tunnel / Fähigkeiten section ───────────────────────────── */
+#tunnelCanvas {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+}
+
+canvas { max-width: 100%; }
+
+.tunnel-content {
+  position: relative;
+  z-index: 5;
+}
+
+.tunnel-slide {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.tunnel-card {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  padding: 2rem;
+}
+
+#tunnel-title          { background: none; }
+#tunnel-title > .tunnel-card { background: none; }
+#tunnel-end            { background: none; }
+#tunnel-end > .tunnel-card   { background: none; }
+
+/* ─── SVG path animation (Leben) ────────────────────────────── */
+#pathSVG {
+  height: 100%;
+  position: absolute;
+  overflow: visible;
+  width: 75%;
+}
+#ballSVG {
+  overflow: visible;
+  position: absolute;
+  z-index: -5;
+  width: 75%;
+}
+path { visibility: hidden; }
+
+/* ─── Project card grid ──────────────────────────────────────── */
+.project-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.project-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+.project-card-link:hover { text-decoration: none; }
+
+/* ─── Project body (rendered HTML from DB) ───────────────────── */
+.project-body p  { line-height: 1.8; }
+.project-body img { border-radius: 8px; margin: 1rem 0; }
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 550px) {
+  #header {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: -10rem;
+    height: 100vh;
+  }
+}
