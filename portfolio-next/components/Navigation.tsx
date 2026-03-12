@@ -20,7 +20,7 @@ export default function Navigation() {
             <li className="nav-item"><a className="nav-link" href="/skills">Fähigkeiten</a></li>
             <li className="nav-item"><a className="nav-link" href="/projects">Projekte</a></li>
             <li className="nav-item"><a className="nav-link" href="/studio">Studio</a></li>
-            <li className="nav-item"><a className="nav-link" href="#hobbys">Hobbys</a></li>
+            <li className="nav-item"><a className="nav-link" href="/hobbies">Hobbys</a></li>
             <li className="nav-item"><a className="nav-link" href="/contact">Links</a></li>
           </ul>
         </div>
