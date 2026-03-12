@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getProjects } from '@/lib/db';
 import type { Metadata } from 'next';
+import Navigation from '@/components/Navigation';
 
 export const metadata: Metadata = {
   title: 'Projekte – Paul Thomasius',
@@ -22,11 +23,11 @@ export default function ProjectsPage() {
 
   return (
     <main className="container py-5" style={{ maxWidth: '1000px' }}>
-      <Link href="/" className="btn btn-outline-light mb-4">← Zurück zur Startseite</Link>
+      <Navigation />
       <h1>Alle Projekte</h1>
 
       {projects.length === 0 ? (
-        <p className="mt-4" style={{ opacity: 0.7 }}>Noch keine Projekte vorhanden.</p>
+        <p className="mt-4" style={{ opacity: 0.7 }}>Error 404: Not Found</p>
       ) : (
         <div className="project-card-grid">
           {projects.map((p) => (

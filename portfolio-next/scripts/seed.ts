@@ -41,6 +41,9 @@ db.exec(`
     ('project', 'Project', 'Portfolio project with technical details'),
     ('skill', 'Skill', 'Skill profile entry such as tools, languages, strengths'),
     ('life', 'Life', 'Timeline-style milestone or biography section'),
+    ('about', 'About', 'About section content for the homepage'),
+    ('hobby', 'Hobby', 'Hobby cards for the homepage'),
+    ('reference', 'Reference', 'Reference entries for the homepage'),
     ('note', 'Note', 'Short update or thought'),
     ('experiment', 'Experiment', 'Prototype, trial, or concept post');
 `);
@@ -103,6 +106,97 @@ for (const project of projects) {
 }
 
 const extraPosts = [
+  {
+    title: 'About Intro',
+    slug: 'about-intro',
+    excerpt: 'Kurzvorstellung auf der Startseite',
+    post_type: 'about',
+    content_markdown: [
+      'Hi! Mein Name ist Paul. Ich bin Student der Medieninformatik mit Fokus auf Web und UX. Wenn du Fragen hast und Hinweise, [schreib mich gerne an](/contact). Viel Spaß auf meiner Seite! :)',
+    ].join('\n'),
+    cover_image: '/assets/img/portrait.webp',
+    tags: JSON.stringify(['about', 'homepage']),
+  },
+  {
+    title: 'DnD',
+    slug: 'hobby-dnd',
+    excerpt:
+      'Dank Mr. Biggar und Mr. Goodman bin ich seit Jahren Fan von Dungeons and Dragons und treffe mich regelmäßig mit Freunden um gemeinsam Geschichten zu erzählen.',
+    post_type: 'hobby',
+    content_markdown: [
+      'Dank Mr. Biggar und Mr. Goodman bin ich seit Jahren Fan von Dungeons and Dragons und treffe mich regelmäßig mit Freunden um gemeinsam Geschichten zu erzählen.',
+    ].join('\n'),
+    cover_image: '/assets/img/dice-dice-d20-d20-d-d-dungeons-dragons-roll-dnd-role-playing.webp',
+    tags: JSON.stringify(['hobby', 'dnd']),
+  },
+  {
+    title: 'Chor',
+    slug: 'hobby-chor',
+    excerpt:
+      'Mit meinem Chor wird jede Woche geübt. Normalerweise treten wir in meiner ehemaligen Schule auf - wir waren aber auch schon im Gewandhaus.',
+    post_type: 'hobby',
+    content_markdown: [
+      'Mit meinem Chor wird jede Woche geübt. Normalerweise treten wir in meiner ehemaligen Schule auf - wir waren aber auch schon im Gewandhaus.',
+    ].join('\n'),
+    cover_image: 'https://www.saechsischer-chorverband.de/_Resources/Persistent/88c59472aaab2a8dc34cf55d262b7725552c6f77/gewandhaus_DSC2454-1900x832.jpg',
+    tags: JSON.stringify(['hobby', 'chor']),
+  },
+  {
+    title: 'Instrumente',
+    slug: 'hobby-instrumente',
+    excerpt:
+      'Ich habe aus meiner Kindheit viele Jahre Schlagzeug-Erfahrung und habe mir seit ein paar Jahren versucht selbst Ukulele, Gitarre und Bass beizubringen.',
+    post_type: 'hobby',
+    content_markdown: [
+      'Ich habe aus meiner Kindheit viele Jahre Schlagzeug-Erfahrung und habe mir seit ein paar Jahren versucht selbst Ukulele, Gitarre und Bass beizubringen.',
+    ].join('\n'),
+    cover_image: '/assets/img/guitar-acoustic-guitar-instrument-musical-instrument-close-up-violin-101197-pxhere.com.webp',
+    tags: JSON.stringify(['hobby', 'musik']),
+  },
+  {
+    title: 'Gaming',
+    slug: 'hobby-gaming',
+    excerpt: 'Ich wäre kein Informatik-Student, wenn ich nicht auch Interesse an Computerspielen hätte ;)',
+    post_type: 'hobby',
+    content_markdown: [
+      'Ich wäre kein Informatik-Student, wenn ich nicht auch Interesse an Computerspielen hätte ;)',
+    ].join('\n'),
+    cover_image: '/assets/img/maus.webp',
+    tags: JSON.stringify(['hobby', 'gaming']),
+  },
+  {
+    title: 'Politische Arbeit',
+    slug: 'reference-politische-arbeit',
+    excerpt: 'Für meine Dienste als Friedensbotschafter der UN erhielt ich schon 47 Friedensnobelpreise.',
+    post_type: 'reference',
+    content_markdown: [
+      'Für meine Dienste als Friedensbotschafter der UN erhielt ich schon 47 Friedensnobelpreise.',
+    ].join('\n'),
+    cover_image: '/assets/img/portrait.webp',
+    tags: JSON.stringify(['reference']),
+  },
+  {
+    title: 'Arbeitgeber',
+    slug: 'reference-arbeitgeber',
+    excerpt: 'Arbeitgeber sagten über mich: "Er ist okay."',
+    post_type: 'reference',
+    content_markdown: [
+      'Arbeitgeber sagten über mich: <q>Er ist okay.</q>',
+    ].join('\n'),
+    cover_image: '/assets/img/portrait.webp',
+    tags: JSON.stringify(['reference']),
+  },
+  {
+    title: 'Freunde',
+    slug: 'reference-freunde',
+    excerpt: 'Freunde sagten über mich: "Er ist okay."',
+    post_type: 'reference',
+    content_markdown: [
+      'Freunde sagten über mich: <q>Er ist okay.</q>',
+    ].join('\n'),
+    cover_image: '/assets/img/portrait.webp',
+    tags: JSON.stringify(['reference']),
+  },
   {
     title: 'Web Development',
     slug: 'web-development-skill',

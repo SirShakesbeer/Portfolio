@@ -53,69 +53,6 @@ export default async function Projekte() {
             </div>
           </>
         )}
-
-        {/* ── Legacy static projects ── */}
-        <h2 className="mt-5">Frühere Arbeiten</h2>
-
-        <article>
-          <h3>Video-Bearbeitung</h3>
-          <p>
-            &quot;Wie wird Sauerkraut hergestellt?&quot; – Über mehrere Wochen erstreckte sich dieses
-            Schulprojekt und belohnte mich mit einer okay-schmeckenden Beilage und einer sehr guten
-            Note. Das Video wird auch heute noch neuen Schülern im Bionik-Kurs gezeigt.
-          </p>
-          <p className="py-2" id="video">
-            <video controls>
-              <source src="/vid/tutorial.webm" type="video/webm" />
-              Ihr Browser unterstützt das Video-Tag nicht.
-            </video>
-          </p>
-        </article>
-
-        <article>
-          <h3>Arduino-Schmarduino</h3>
-          <p>
-            Im ersten Semester nimmt man am Modul Digitaltechnik I teil. In zwei Praktika muss man im
-            Hardware-Labor verschiedene Aufgaben bewältigen – von Hardware-Software-Interaktion bis
-            zur Lichtshow auf einem Arduino.
-          </p>
-
-          <h3>Bilder-Display</h3>
-          <p>
-            Mein erstes privates Projekt: ein kleines Display, das Bilder (eine spätere Version auch
-            GIFs) darstellt. Dafür verwendete ich einen{' '}
-            <a href="https://wiki.seeedstudio.com/XIAO-RP2040/">Seeed Studio XIAO RP2040</a>.
-          </p>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/img/seeeduino_xiao_rp2040.webp"
-            alt="Seeed Studio XIAO RP2040"
-            className="img-fluid"
-          />
-
-          <h3 className="mt-4">WiFi-Thermometer</h3>
-          <p>
-            Ein Geschenk-Projekt: Pool-Temperatur per{' '}
-            <a href="https://www.wemos.cc/en/latest/s2/s2_mini.html">WeMos S2 Mini</a> (ESP32) und
-            wasserdichtem DS18B20-Sensor auf ein vorhandenes Display übertragen.
-          </p>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/img/lolin_s2_mini.webp"
-            alt="WeMos S2 Mini"
-            className="img-fluid"
-          />
-        </article>
-
-        <article className="mt-4">
-          <h3>Facharbeit</h3>
-          <p>
-            Facharbeit über mein Auslandsjahr in Kanada:{' '}
-            <a href="/docs/Term Paper - An Exchange Year in Canada.pdf">
-              Term Paper – An Exchange Year in Canada
-            </a>
-          </p>
-        </article>
       </section>
     </section>
   );

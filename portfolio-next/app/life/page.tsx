@@ -21,14 +21,17 @@ type LifePost = {
 
 export default function LifePage() {
   const posts = getPostsByType('life') as LifePost[];
+  const totalSlides = posts.length + 3;
 
   return (
     <>
-      <Navigation />
+      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100 }}>
+        <Navigation />
+      </div>
 
       <main className="tunnel row justify-content-md-center" id="life">
         <div className="px-0" id="lifeTunnelCanvas">
-          <TunnelScene scrollTriggerSelector=".life-tunnel-content" />
+          <TunnelScene scrollTriggerSelector="#life" scrollDistanceSlides={totalSlides} />
         </div>
 
         <div className="col life-tunnel-content col-lg-9 col-md-10 col-sm-12">
@@ -44,9 +47,9 @@ export default function LifePage() {
           {posts.length === 0 ? (
             <section className="life-tunnel-slide row">
               <div className="col-10 col-lg-8">
-                <h2>Noch keine Eintraege</h2>
+                <h2>Error 404</h2>
                 <p>
-                  Lege in <Link href="/studio">Studio</Link> Posts mit Typ <code>life</code> an.
+                  Could not find any posts with type <code>life</code>.
                 </p>
               </div>
             </section>
@@ -56,10 +59,7 @@ export default function LifePage() {
                 <div className="col-10 col-lg-8">
                   <p className="smallertext mb-1">Station {index + 1}</p>
                   <h2>{post.title}</h2>
-                  <p>{post.excerpt}</p>
-                  <p>
-                    <Link href={`/life/${post.slug}`}>Details</Link>
-                  </p>
+                  <div className="project-body" dangerouslySetInnerHTML={{ __html: post.content_html }} />
                 </div>
               </section>
             ))
@@ -68,14 +68,14 @@ export default function LifePage() {
           <section className="life-tunnel-slide row" id="life-tunnel-end">
             <div className="col-10 col-lg-8">
               <p>
-                <Link href="/">Zurueck zur Startseite</Link>
+                <Link href="/">Back to Home</Link>
               </p>
             </div>
           </section>
         </div>
       </main>
 
-      <LifeTunnelAnimations />
+      <LifeTunnelAnimations totalSlides={totalSlides} />
     </>
   );
 }

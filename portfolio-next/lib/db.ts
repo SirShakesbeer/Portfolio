@@ -72,6 +72,9 @@ function initSchema(db: Database.Database): void {
       ('project', 'Project', 'Portfolio project with technical details'),
       ('skill', 'Skill', 'Skill profile entry such as tools, languages, strengths'),
       ('life', 'Life', 'Timeline-style milestone or biography section'),
+      ('about', 'About', 'About section content for the homepage'),
+      ('hobby', 'Hobby', 'Hobby cards for the homepage'),
+      ('reference', 'Reference', 'Reference entries for the homepage'),
       ('lifehistory', 'Life History (legacy)', 'Legacy alias for life content'),
       ('note', 'Note', 'Short update or thought'),
       ('experiment', 'Experiment', 'Prototype, trial, or concept post')`

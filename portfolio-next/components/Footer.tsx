@@ -3,8 +3,9 @@ export default function Footer() {
     <footer className="row" id="footer">
       <div className="col-12 text-center py-2 d-flex justify-content-center">
         <p>
-          Kontakt:{' '}
-          <a href="mailto:paul.thomasius@stud.htwk-leipzig.de">Paul Thomasius</a>
+          <a href="/contact">Kontakt & Links</a>
+          {' | '}
+          <a href="/impressum">Impressum</a>
           {' | '}
           <a
             data-bs-toggle="offcanvas"

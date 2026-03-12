@@ -163,16 +163,24 @@ video {
   left: 0;
   z-index: 1;
   opacity: 0;
+  pointer-events: none;
 }
 
 canvas { max-width: 100%; }
 
+#tunnelCanvas canvas,
+#lifeTunnelCanvas canvas {
+  pointer-events: none;
+}
+
 .tunnel-content {
   position: relative;
   z-index: 5;
+  pointer-events: none;
 }
 
 .tunnel-slide {
+  pointer-events: auto;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -201,14 +209,17 @@ canvas { max-width: 100%; }
   left: 0;
   z-index: 1;
   opacity: 1;
+  pointer-events: none;
 }
 
 .life-tunnel-content {
   position: relative;
   z-index: 5;
+  pointer-events: none;
 }
 
 .life-tunnel-slide {
+  pointer-events: auto;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -232,12 +243,14 @@ canvas { max-width: 100%; }
   position: absolute;
   overflow: visible;
   width: 75%;
+  pointer-events: none;
 }
 #ballSVG {
   overflow: visible;
   position: absolute;
   z-index: -5;
   width: 75%;
+  pointer-events: none;
 }
 path { visibility: hidden; }
 

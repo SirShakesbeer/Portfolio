@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getPostsByType } from '@/lib/db';
+import Navigation from '@/components/Navigation';
 
 export const metadata: Metadata = {
   title: 'Skills – Paul Thomasius',
@@ -21,7 +22,7 @@ export default function SkillsPage() {
 
   return (
     <main className="container py-5" style={{ maxWidth: '1000px' }}>
-      <Link href="/" className="btn btn-outline-light mb-4">← Zurueck zur Startseite</Link>
+      <Navigation />
       <h1>Skills</h1>
 
       {skills.length === 0 ? (

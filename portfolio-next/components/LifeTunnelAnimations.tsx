@@ -6,7 +6,11 @@ import { useEffect } from 'react';
  * ScrollTrigger setup for the /life tunnel page.
  * Uses dedicated selectors so it does not interfere with the homepage tunnel.
  */
-export default function LifeTunnelAnimations() {
+type LifeTunnelAnimationsProps = {
+  totalSlides?: number;
+};
+
+export default function LifeTunnelAnimations({ totalSlides }: LifeTunnelAnimationsProps) {
   useEffect(() => {
     let cleanup: (() => void) | undefined;
 
@@ -29,23 +33,34 @@ export default function LifeTunnelAnimations() {
 
         if (!tunnelContent || !tunnelCanvas || sections.length === 0) return;
 
-        tunnelContent.style.height = `${sections.length * 100}vh`;
+        const resolvedSlides = Math.max(totalSlides ?? sections.length, 1);
+        const scrollSteps = Math.max(resolvedSlides - 1, 1);
+        const getScrollDistance = () => {
+          const navHeight = document.querySelector<HTMLElement>('nav.navbar')?.offsetHeight ?? 0;
+          const baseDistance = resolvedSlides * window.innerHeight;
+          return baseDistance + navHeight;
+        };
+
+        tunnelContent.style.height = `${resolvedSlides * 100}vh`;
+
+        gsap.set(tunnelCanvas, { opacity: 1 });
 
         gsap.to(sections, {
-          yPercent: -100 * Math.max(sections.length - 1, 0),
+          yPercent: -100 * Math.max(resolvedSlides - 1, 0),
           ease: 'none',
           scrollTrigger: {
             id: 'portfolio-life-page-slides',
             trigger: tunnelContent,
+            start: 'top top',
             pin: true,
             scrub: 0.2,
             invalidateOnRefresh: true,
             snap: {
-              snapTo: 1 / Math.max(sections.length - 1, 1),
+              snapTo: 1 / scrollSteps,
               duration: { min: 0.2, max: 0.45 },
               ease: 'power1.inOut',
             },
-            end: () => `+=${tunnelContent.offsetHeight}`,
+            end: () => `+=${getScrollDistance()}`,
           },
         });
 
@@ -53,27 +68,11 @@ export default function LifeTunnelAnimations() {
           id: 'portfolio-life-page-canvas-pin',
           trigger: tunnelContent,
           start: 'top top',
-          end: () => `+=${tunnelContent.offsetHeight}`,
+          end: () => `+=${getScrollDistance()}`,
           pin: tunnelCanvas,
           pinSpacing: false,
           invalidateOnRefresh: true,
         });
-
-        gsap.fromTo(
-          '#lifeTunnelCanvas',
-          { opacity: 0.95 },
-          {
-            opacity: 0,
-            scrollTrigger: {
-              id: 'portfolio-life-page-canvas-fade',
-              trigger: '#life-tunnel-end',
-              start: 'top bottom',
-              end: 'top top',
-              scrub: 0.8,
-              invalidateOnRefresh: true,
-            },
-          }
-        );
       });
 
       ScrollTrigger.refresh();
@@ -81,7 +80,7 @@ export default function LifeTunnelAnimations() {
     })();
 
     return () => cleanup?.();
-  }, []);
+  }, [totalSlides]);
 
   return null;
 }

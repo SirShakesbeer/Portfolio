@@ -83,13 +83,10 @@ export default function Leben() {
           </article>
         ) : (
           <>
-            {posts.slice(0, 3).map((post) => (
+            {posts.map((post) => (
               <article className="row py-3" key={post.id}>
                 <h3>{post.title}</h3>
                 <p>{post.excerpt}</p>
-                <p>
-                  <Link href={`/life/${post.slug}`}>Weiterlesen</Link>
-                </p>
               </article>
             ))}
 

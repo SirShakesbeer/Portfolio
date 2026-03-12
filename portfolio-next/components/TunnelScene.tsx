@@ -9,10 +9,12 @@ import type { Vector3 } from 'three';
  */
 type TunnelSceneProps = {
   scrollTriggerSelector?: string;
+  scrollDistanceSlides?: number;
 };
 
 export default function TunnelScene({
   scrollTriggerSelector = '.tunnel-content',
+  scrollDistanceSlides,
 }: TunnelSceneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -142,6 +144,11 @@ export default function TunnelScene({
           trigger: scrollTriggerSelector,
           start: 'top top',
           end: () => {
+            if (typeof scrollDistanceSlides === 'number') {
+              const navHeight = document.querySelector<HTMLElement>('nav.navbar')?.offsetHeight ?? 0;
+              const distance = Math.max(scrollDistanceSlides, 1) * window.innerHeight;
+              return `+=${distance + navHeight}`;
+            }
             const el = document.querySelector<HTMLElement>(scrollTriggerSelector);
             return `+=${el?.offsetHeight ?? window.innerHeight}`;
           },
@@ -206,7 +213,7 @@ export default function TunnelScene({
       (canvasRef as React.MutableRefObject<HTMLCanvasElement & { _cleanup?: () => void }>)
         .current?._cleanup?.();
     };
-  }, [scrollTriggerSelector]);
+  }, [scrollDistanceSlides, scrollTriggerSelector]);
 
   return <canvas ref={canvasRef} />;
 }
