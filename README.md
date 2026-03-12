@@ -114,6 +114,16 @@ npm run seed
 - Markdown is stored and converted to HTML on save.
 - Upload endpoint currently has no auth yet (add auth before public deployment).
 
+## Sources
+
+- [Quelle für Scroll-Tunnel](https://codepen.io/motionharvest/pen/WNQYJyM)
+- [Quelle für Tunnel-Bild](https://s3-us-west-2.amazonaws.com/s.cdpn.io/68819/3d_space_5.jpg)
+- [Quelle für Tunnel-Bild 2](https://s3-us-west-2.amazonaws.com/s.cdpn.io/68819/waveform-bump3.jpg)
+- [Bild: DnD](https://www.goodfon.com/miscellanea/wallpaper-download-1920x1080-dice-dice-d20-d20-d-d-dungeons-dragons-roll-dnd-role-playing.html)
+- [Bild: Chor](https://www.saechsischer-chorverband.de/scv/projekte/gewandhaussingen-sachsischer-chore.html)
+- [Bild: Gitarre](https://pxhere.com/de/photo/101197)
+- [Bild: Maus](https://www.flickr.com/photos/w-tommerdich/52739082935)
+
 ## TODO
 
 - update subpages

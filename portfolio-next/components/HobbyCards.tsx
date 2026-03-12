@@ -39,7 +39,7 @@ export default function HobbyCards() {
   return (
     <section className="content-item row justify-content-md-center" id="hobbys">
       <div className="col col-lg-9 col-md-10 col-sm-12">
-        <h1>Hobbys</h1>
+        <h1>Hobbies</h1>
         <div className="container">
           <div className="row row-cols-auto row-gap-3">
             {cards.map((card) => (

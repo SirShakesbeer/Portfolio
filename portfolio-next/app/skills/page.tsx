@@ -21,7 +21,7 @@ export default function SkillsPage() {
   const skills = getPostsByType('skill') as SkillPost[];
 
   return (
-    <div>
+    <div className="d-flex flex-column min-vh-100">
       <Navigation />
       <main className="container py-5" style={{ maxWidth: '1000px' }}>
         <h1>Skills</h1>
@@ -38,9 +38,6 @@ export default function SkillsPage() {
                   <div className="card-body">
                     <h5 className="card-title">{skill.title}</h5>
                     <p className="card-text">{skill.excerpt}</p>
-                    <small style={{ opacity: 0.6 }}>
-                      {new Date(skill.created_at).toLocaleDateString('de-DE')}
-                    </small>
                   </div>
                 </div>
               </Link>

@@ -6,15 +6,6 @@ export default function Footer() {
           <a href="/contact">Kontakt & Links</a>
           {' | '}
           <a href="/impressum">Impressum</a>
-          {' | '}
-          <a
-            data-bs-toggle="offcanvas"
-            href="#offcanvasQuelle"
-            role="button"
-            aria-controls="offcanvasQuelle"
-          >
-            Quellen
-          </a>
         </p>
       </div>
     </footer>
