@@ -28,7 +28,6 @@ export default function Home() {
       </main>
       <Footer />
       <TopButton />
-      <QuellenOffcanvas />
       {/* Initialises all GSAP ScrollTrigger animations after hydration */}
       <AnimationsInit />
     </div>
