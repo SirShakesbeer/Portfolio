@@ -137,15 +137,15 @@ export default function TunnelScene({
       depthOnlyMaterial.colorWrite = false;
 
       const getCardMetrics = () => {
-        const size = 2.75;
+        const size = 2;
         const canvasSize = 1024;
         const padding = 72;
-        const borderWidth = 4;
         const titleFontSize = 54;
         const bodyFontSize = 34;
         const titleLineHeight = 64;
         const bodyLineHeight = 46;
         const sectionGap = 52;
+        const opacity = 0.8;
 
         return {
           width: size,
@@ -153,12 +153,12 @@ export default function TunnelScene({
           canvasWidth: canvasSize,
           canvasHeight: canvasSize,
           padding,
-          borderWidth,
           titleFontSize,
           bodyFontSize,
           titleLineHeight,
           bodyLineHeight,
           sectionGap,
+          opacity,
         };
       };
 
@@ -174,16 +174,6 @@ export default function TunnelScene({
         // Background
         ctx.fillStyle = '#1a3a5c';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Border
-        ctx.strokeStyle = '#88ce02';
-        ctx.lineWidth = metrics.borderWidth;
-        ctx.strokeRect(
-          metrics.padding / 2,
-          metrics.padding / 2,
-          canvas.width - metrics.padding,
-          canvas.height - metrics.padding,
-        );
 
         // Title
         ctx.fillStyle = '#88ce02';
@@ -202,11 +192,11 @@ export default function TunnelScene({
         ctx.fillStyle = '#ffffff';
         ctx.font = `${metrics.bodyFontSize}px Arial, sans-serif`;
         y += metrics.sectionGap;
-        const excerptText = card.excerpt || 'No excerpt';
+        const contentText = card.content || 'No content';
         // Wrap text
         const maxWidth = canvas.width - metrics.padding * 2;
         const lineHeight = metrics.bodyLineHeight;
-        const words = excerptText.split(' ');
+        const words = contentText.split(' ');
         let line = '';
         for (const word of words) {
           const testLine = line + word + ' ';
@@ -364,7 +354,7 @@ export default function TunnelScene({
         for (let i = 0; i < cardMeshes.length; i++) {
           const cardMaterial = cardMeshes[i].material as any;
           const dist = Math.abs(currentCameraPercentage - cardPercentages[i]);
-          const opacity = Math.max(0.2, 1 - dist * 2);
+          const opacity = Math.max(0.2, getCardMetrics().opacity/(1+dist));
           cardMaterial.opacity = opacity;
           cardMaterial.transparent = opacity < 1;
         }
