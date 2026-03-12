@@ -4,7 +4,7 @@ import About from '@/components/About';
 import Leben from '@/components/Leben';
 import Faehigkeiten from '@/components/Faehigkeiten';
 import Projekte from '@/components/Projekte';
-import Hobbies from '@/components/Hobbies';
+import HobbyCards from '@/components/HobbyCards';
 import Referenzen from '@/components/Referenzen';
 import Footer from '@/components/Footer';
 import TopButton from '@/components/TopButton';
@@ -22,7 +22,7 @@ export default function Home() {
           <Leben />
           <Faehigkeiten />
           <Projekte />
-          <Hobbies />
+          <HobbyCards />
           <Referenzen />
         </section>
       </main>

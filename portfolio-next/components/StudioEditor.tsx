@@ -25,12 +25,30 @@ type StudioPostDetail = {
   title: string;
   slug: string;
   post_type: string;
+  sort_order: number | null;
   excerpt: string;
   content_markdown: string;
   cover_image: string | null;
   tags: string;
+  meta_json: string;
   status: 'published' | 'draft';
 };
+
+function postTypeDisallowsMediaMeta(type: string): boolean {
+  return ['life', 'about', 'reference', 'skill', 'impressum', 'contact'].includes(type);
+}
+
+function postTypeSupportsSortOrder(type: string): boolean {
+  return type === 'life';
+}
+
+function isContactType(type: string): boolean {
+  return type === 'contact';
+}
+
+function isImpressumType(type: string): boolean {
+  return type === 'impressum';
+}
 
 type Media = {
   id: number;
@@ -44,6 +62,17 @@ type StudioEditorProps = {
   initialPostId?: number;
   onSave?: () => void;
 };
+
+const DEFAULT_POST_TYPES: PostType[] = [
+  { id: -1, slug: 'project', label: 'Project', description: '' },
+  { id: -2, slug: 'skill', label: 'Skill', description: '' },
+  { id: -3, slug: 'life', label: 'Life', description: '' },
+  { id: -4, slug: 'about', label: 'About', description: '' },
+  { id: -5, slug: 'reference', label: 'Reference', description: '' },
+  { id: -6, slug: 'hobby', label: 'Hobby', description: '' },
+  { id: -7, slug: 'contact', label: 'Contact', description: '' },
+  { id: -8, slug: 'impressum', label: 'Impressum', description: '' },
+];
 
 function makeSlug(input: string): string {
   return input
@@ -75,7 +104,9 @@ export default function StudioEditor({
   initialPostId,
   onSave,
 }: StudioEditorProps) {
-  const [postTypes, setPostTypes] = useState(initialPostTypes);
+  const [postTypes, setPostTypes] = useState(
+    initialPostTypes.length > 0 ? initialPostTypes : DEFAULT_POST_TYPES
+  );
   const [existingPosts, setExistingPosts] = useState<StudioPostSummary[]>([]);
   const [selectedPostId, setSelectedPostId] = useState<number | null>(initialPostId || null);
   const [isLoadingPost, setIsLoadingPost] = useState(false);
@@ -84,10 +115,15 @@ export default function StudioEditor({
 
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
-  const [postType, setPostType] = useState(initialPostTypes[0]?.slug || 'project');
+  const [postType, setPostType] = useState(
+    (initialPostTypes.length > 0 ? initialPostTypes[0]?.slug : DEFAULT_POST_TYPES[0].slug) || 'project'
+  );
   const [excerpt, setExcerpt] = useState('');
   const [tags, setTags] = useState('');
   const [coverImage, setCoverImage] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
+  const [contactLink, setContactLink] = useState('');
+  const [contactLogo, setContactLogo] = useState('');
   const [status, setStatus] = useState<'published' | 'draft'>('published');
   const [markdown, setMarkdown] = useState('');
 
@@ -112,6 +148,24 @@ export default function StudioEditor({
     }
   }, [initialPostId]);
 
+  useEffect(() => {
+    setPostTypes(initialPostTypes.length > 0 ? initialPostTypes : DEFAULT_POST_TYPES);
+  }, [initialPostTypes]);
+
+  useEffect(() => {
+    if (postTypes.length === 0) return;
+    const typeExists = postTypes.some((t) => t.slug === postType);
+    if (!typeExists) {
+      setPostType(postTypes[0].slug);
+    }
+  }, [postTypes, postType]);
+
+  useEffect(() => {
+    if (!postTypeSupportsSortOrder(postType)) {
+      setSortOrder('');
+    }
+  }, [postType]);
+
   async function refreshExistingPosts() {
     const res = await fetch('/api/studio/posts?status=all');
     const body = await res.json().catch(() => []);
@@ -127,9 +181,12 @@ export default function StudioEditor({
     setTitle('');
     setSlug('');
     setPostType(postTypes[0]?.slug || 'project');
+    setSortOrder('');
     setExcerpt('');
     setTags('');
     setCoverImage('');
+    setContactLink('');
+    setContactLogo('');
     setStatus('published');
     setMarkdown('');
     setMessage('');
@@ -160,6 +217,7 @@ export default function StudioEditor({
       setTitle(post.title);
       setSlug(post.slug);
       setPostType(post.post_type);
+      setSortOrder(post.sort_order === null ? '' : String(post.sort_order));
       setExcerpt(post.excerpt || '');
       try {
         setTags((JSON.parse(post.tags || '[]') as string[]).join(', '));
@@ -167,6 +225,14 @@ export default function StudioEditor({
         setTags('');
       }
       setCoverImage(post.cover_image || '');
+      try {
+        const meta = JSON.parse(post.meta_json || '{}') as { link?: string; logo?: string };
+        setContactLink(meta.link || '');
+        setContactLogo(meta.logo || '');
+      } catch {
+        setContactLink('');
+        setContactLogo('');
+      }
       setStatus(post.status);
       setMarkdown(post.content_markdown || '');
       setMessage(`Loaded post #${post.id} for editing.`);
@@ -294,15 +360,37 @@ export default function StudioEditor({
     setMessage('');
 
     try {
+      const contactMode = isContactType(postType);
+      const impressumMode = isImpressumType(postType);
+
+      if (contactMode && (!title.trim() || !contactLink.trim() || !contactLogo.trim())) {
+        setMessage('Contact posts require title, link, and logo URL.');
+        return;
+      }
+
+      const normalizedSortOrder =
+        postTypeSupportsSortOrder(postType) && sortOrder.trim() !== ''
+          ? Number(sortOrder)
+          : null;
+
+      const titleForSave = impressumMode ? 'Impressum' : title;
+      const slugForSave = impressumMode ? 'impressum' : previewSlug;
+      const excerptForSave = contactMode || impressumMode ? '' : excerpt;
+      const markdownForSave = contactMode ? '' : markdown;
+      const statusForSave: 'published' | 'draft' = contactMode || impressumMode ? 'published' : status;
+
       const payload = {
-        title,
-        slug: previewSlug,
+        title: titleForSave,
+        slug: slugForSave,
         postType,
-        excerpt,
+        sortOrder: normalizedSortOrder,
+        excerpt: excerptForSave,
         tags,
         coverImage,
-        status,
-        markdown,
+        status: statusForSave,
+        markdown: markdownForSave,
+        contactLink,
+        contactLogo,
       };
 
       const endpoint = isEditMode ? `/api/studio/posts/${selectedPostId}` : '/api/studio/posts';
@@ -327,6 +415,10 @@ export default function StudioEditor({
             ? `/skills/${body.slug}`
             : body.postType === 'life'
               ? `/life/${body.slug}`
+              : body.postType === 'contact'
+                ? '/contact'
+                : body.postType === 'impressum'
+                  ? '/impressum'
               : `/posts/${body.postType}/${body.slug}`;
       setMessage(`${isEditMode ? 'Updated' : 'Saved'}. Open ${targetUrl}`);
       await refreshExistingPosts();
@@ -374,70 +466,114 @@ export default function StudioEditor({
       <div className={styles.layout}>
         {/* ── Left column: content ── */}
         <div>
-          <div className={styles.field}>
-            <label className={styles.label}>Title</label>
-            <input
-              className={styles.input}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="My new post"
-            />
-          </div>
-
-          <div className={styles.row}>
+          {!isImpressumType(postType) && (
             <div className={styles.field}>
-              <label className={styles.label}>Slug</label>
+              <label className={styles.label}>Title</label>
               <input
                 className={styles.input}
-                value={slug}
-                onChange={(e) => setSlug(e.target.value)}
-                placeholder="my-new-post"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="My new post"
               />
             </div>
+          )}
+
+          {!isContactType(postType) && !isImpressumType(postType) && (
+            <div className={styles.row}>
+              <div className={styles.field}>
+                <label className={styles.label}>Slug</label>
+                <input
+                  className={styles.input}
+                  value={slug}
+                  onChange={(e) => setSlug(e.target.value)}
+                  placeholder="my-new-post"
+                />
+              </div>
+              <div className={styles.field}>
+                <label className={styles.label}>Status</label>
+                <select
+                  className={styles.select}
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value as 'published' | 'draft')}
+                >
+                  <option value="published">Published</option>
+                  <option value="draft">Draft</option>
+                </select>
+              </div>
+            </div>
+          )}
+
+          {postTypeSupportsSortOrder(postType) && (
             <div className={styles.field}>
-              <label className={styles.label}>Status</label>
-              <select
-                className={styles.select}
-                value={status}
-                onChange={(e) => setStatus(e.target.value as 'published' | 'draft')}
-              >
-                <option value="published">Published</option>
-                <option value="draft">Draft</option>
-              </select>
+              <label className={styles.label}>Sort Order (Life Timeline)</label>
+              <input
+                className={styles.input}
+                type="number"
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+                placeholder="1"
+              />
             </div>
-          </div>
+          )}
 
-          <div className={styles.field}>
-            <label className={styles.label}>Excerpt</label>
-            <textarea
-              className={styles.textarea}
-              rows={3}
-              value={excerpt}
-              onChange={(e) => setExcerpt(e.target.value)}
-              placeholder="Short preview text for cards"
-            />
-          </div>
+          {isContactType(postType) && (
+            <>
+              <div className={styles.field}>
+                <label className={styles.label}>Link URL</label>
+                <input
+                  className={styles.input}
+                  value={contactLink}
+                  onChange={(e) => setContactLink(e.target.value)}
+                  placeholder="https://example.com"
+                />
+              </div>
+              <div className={styles.field}>
+                <label className={styles.label}>Logo URL</label>
+                <input
+                  className={styles.input}
+                  value={contactLogo}
+                  onChange={(e) => setContactLogo(e.target.value)}
+                  placeholder="/assets/icons/logo.svg"
+                />
+              </div>
+            </>
+          )}
 
-          <div className={styles.field}>
-            <label className={styles.label}>Markdown Content</label>
-            <div className={styles.toolbar}>
-              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('## ')}>H2</button>
-              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('**', '**')}>Bold</button>
-              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('*', '*')}>Italic</button>
-              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('`', '`')}>Code</button>
-              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('\n- ')}>List</button>
-              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('[text](https://example.com)')}>Link</button>
-              <button type="button" className={styles.mediaBtnToolbar} onClick={() => setIsMediaPickerOpen(true)}>🖼️ Insert Media</button>
+          {!isContactType(postType) && !isImpressumType(postType) && (
+            <div className={styles.field}>
+              <label className={styles.label}>Excerpt</label>
+              <textarea
+                className={styles.textarea}
+                rows={3}
+                value={excerpt}
+                onChange={(e) => setExcerpt(e.target.value)}
+                placeholder="Short preview text for cards"
+              />
             </div>
-            <textarea
-              ref={textRef}
-              className={styles.markdownArea}
-              rows={18}
-              value={markdown}
-              onChange={(e) => setMarkdown(e.target.value)}
-              placeholder={'# Headline\n\nWrite your content here...'}
-            />
-          </div>
+          )}
+
+          {!isContactType(postType) && (
+            <div className={styles.field}>
+              <label className={styles.label}>Markdown Content</label>
+              <div className={styles.toolbar}>
+                <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('## ')}>H2</button>
+                <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('**', '**')}>Bold</button>
+                <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('*', '*')}>Italic</button>
+                <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('`', '`')}>Code</button>
+                <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('\n- ')}>List</button>
+                <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('[text](https://example.com)')}>Link</button>
+                <button type="button" className={styles.mediaBtnToolbar} onClick={() => setIsMediaPickerOpen(true)}>🖼️ Insert Media</button>
+              </div>
+              <textarea
+                ref={textRef}
+                className={styles.markdownArea}
+                rows={18}
+                value={markdown}
+                onChange={(e) => setMarkdown(e.target.value)}
+                placeholder={'# Headline\n\nWrite your content here...'}
+              />
+            </div>
+          )}
         </div>
 
         {/* ── Right column: settings ── */}
@@ -501,41 +637,47 @@ export default function StudioEditor({
             </button>
           </div>
 
-          <div className={styles.field}>
-            <label className={styles.label}>Tags (comma-separated)</label>
-            <input
-              className={styles.input}
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              placeholder="nextjs, sqlite, portfolio"
-            />
-          </div>
+          {!postTypeDisallowsMediaMeta(postType) && (
+            <>
+              <div className={styles.field}>
+                <label className={styles.label}>Tags (comma-separated)</label>
+                <input
+                  className={styles.input}
+                  value={tags}
+                  onChange={(e) => setTags(e.target.value)}
+                  placeholder="nextjs, sqlite, portfolio"
+                />
+              </div>
 
-          <div className={styles.field}>
-            <label className={styles.label}>Cover Image URL</label>
-            <input
-              className={styles.input}
-              value={coverImage}
-              onChange={(e) => setCoverImage(e.target.value)}
-              placeholder="/uploads/2026/03/my-cover.webp"
-            />
-          </div>
+              <div className={styles.field}>
+                <label className={styles.label}>Cover Image URL</label>
+                <input
+                  className={styles.input}
+                  value={coverImage}
+                  onChange={(e) => setCoverImage(e.target.value)}
+                  placeholder="/uploads/2026/03/my-cover.webp"
+                />
+              </div>
+            </>
+          )}
 
-          <div className={styles.sideCard}>
-            <h5>Media Upload</h5>
-            <input className={styles.input} type="file" ref={uploadRef} multiple />
-            <div className={styles.btnRow}>
-              <button
-                type="button"
-                className={styles.btnGhost}
-                onClick={uploadFiles}
-                disabled={isUploading}
-              >
-                {isUploading ? 'Uploading…' : 'Upload + Insert Markdown'}
-              </button>
+          {!isImpressumType(postType) && (
+            <div className={styles.sideCard}>
+              <h5>Media Upload</h5>
+              <input className={styles.input} type="file" ref={uploadRef} multiple />
+              <div className={styles.btnRow}>
+                <button
+                  type="button"
+                  className={styles.btnGhost}
+                  onClick={uploadFiles}
+                  disabled={isUploading}
+                >
+                  {isUploading ? 'Uploading…' : 'Upload + Insert Markdown'}
+                </button>
+              </div>
+              <span className={styles.uploadHint}>Files go to /public/uploads/YYYY/MM</span>
             </div>
-            <span className={styles.uploadHint}>Files go to /public/uploads/YYYY/MM</span>
-          </div>
+          )}
 
           <div className={styles.sideCard}>
             <p className={styles.slugPreview}>

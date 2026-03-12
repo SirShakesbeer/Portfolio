@@ -31,6 +31,7 @@ function initSchema(db: Database.Database): void {
       title             TEXT    NOT NULL,
       slug              TEXT    NOT NULL UNIQUE,
       post_type         TEXT    NOT NULL,
+      sort_order        INTEGER,
       excerpt           TEXT    NOT NULL DEFAULT '',
       content_markdown  TEXT    NOT NULL DEFAULT '',
       content_html      TEXT    NOT NULL DEFAULT '',
@@ -73,12 +74,20 @@ function initSchema(db: Database.Database): void {
       ('skill', 'Skill', 'Skill profile entry such as tools, languages, strengths'),
       ('life', 'Life', 'Timeline-style milestone or biography section'),
       ('about', 'About', 'About section content for the homepage'),
+      ('contact', 'Contact', 'Contact links with logo and destination URL'),
+      ('impressum', 'Impressum', 'Legal notice managed as markdown content'),
       ('hobby', 'Hobby', 'Hobby cards for the homepage'),
       ('reference', 'Reference', 'Reference entries for the homepage'),
       ('lifehistory', 'Life History (legacy)', 'Legacy alias for life content'),
       ('note', 'Note', 'Short update or thought'),
       ('experiment', 'Experiment', 'Prototype, trial, or concept post')`
   ).run();
+
+  // Ensure older databases get newly introduced columns.
+  const postColumns = db.prepare("PRAGMA table_info('posts')").all() as Array<{ name: string }>;
+  if (!postColumns.some((col) => col.name === 'sort_order')) {
+    db.exec('ALTER TABLE posts ADD COLUMN sort_order INTEGER');
+  }
 
   // Normalize legacy type naming so URLs and Studio terminology use "life" consistently.
   db.prepare("UPDATE posts SET post_type = 'life' WHERE post_type = 'lifehistory'").run();
@@ -124,6 +133,7 @@ export type PostRecord = {
   title: string;
   slug: string;
   post_type: string;
+  sort_order: number | null;
   excerpt: string;
   content_markdown: string;
   content_html: string;
@@ -157,15 +167,33 @@ export function ensurePostType(slug: string, label?: string) {
 }
 
 export function getPostsByType(postType: string, status: 'published' | 'draft' | 'all' = 'published') {
-  if (status === 'all') {
-    return getDb()
-      .prepare('SELECT * FROM posts WHERE post_type = ? ORDER BY created_at DESC')
-      .all(postType) as PostRecord[];
-  }
+  const orderBy = postType === 'life'
+    ? 'ORDER BY COALESCE(sort_order, 999999), created_at ASC'
+    : 'ORDER BY created_at DESC';
 
-  return getDb()
-    .prepare('SELECT * FROM posts WHERE post_type = ? AND status = ? ORDER BY created_at DESC')
-    .all(postType, status) as PostRecord[];
+  try {
+    if (status === 'all') {
+      return getDb()
+        .prepare(`SELECT * FROM posts WHERE post_type = ? ${orderBy}`)
+        .all(postType) as PostRecord[];
+    }
+
+    return getDb()
+      .prepare(`SELECT * FROM posts WHERE post_type = ? AND status = ? ${orderBy}`)
+      .all(postType, status) as PostRecord[];
+  } catch (error) {
+    // Backward compatibility for instances where an older DB connection misses sort_order.
+    const fallbackOrder = 'ORDER BY created_at DESC';
+    if (status === 'all') {
+      return getDb()
+        .prepare(`SELECT * FROM posts WHERE post_type = ? ${fallbackOrder}`)
+        .all(postType) as PostRecord[];
+    }
+
+    return getDb()
+      .prepare(`SELECT * FROM posts WHERE post_type = ? AND status = ? ${fallbackOrder}`)
+      .all(postType, status) as PostRecord[];
+  }
 }
 
 export function getPostByTypeAndSlug(postType: string, slug: string, includeDraft = false) {
@@ -213,6 +241,7 @@ export function createPost(data: {
   title: string;
   slug: string;
   post_type: string;
+  sort_order?: number | null;
   excerpt?: string;
   content_markdown?: string;
   content_html?: string;
@@ -226,10 +255,11 @@ export function createPost(data: {
   return getDb()
     .prepare(
       `INSERT INTO posts
-      (title, slug, post_type, excerpt, content_markdown, content_html, cover_image, tags, status, meta_json)
-      VALUES (@title, @slug, @post_type, @excerpt, @content_markdown, @content_html, @cover_image, @tags, @status, @meta_json)`
+      (title, slug, post_type, sort_order, excerpt, content_markdown, content_html, cover_image, tags, status, meta_json)
+      VALUES (@title, @slug, @post_type, @sort_order, @excerpt, @content_markdown, @content_html, @cover_image, @tags, @status, @meta_json)`
     )
     .run({
+      sort_order: null,
       excerpt: '',
       content_markdown: '',
       content_html: '',
@@ -264,11 +294,13 @@ export function updatePostById(
     title: string;
     slug: string;
     post_type: string;
+    sort_order: number | null;
     excerpt: string;
     content_markdown: string;
     content_html: string;
     cover_image: string | null;
     tags: string;
+    meta_json: string;
     status: 'published' | 'draft';
   }>
 ) {

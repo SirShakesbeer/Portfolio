@@ -14,26 +14,33 @@ export default function StudioPage() {
   useEffect(() => {
     const fetchPostTypes = async () => {
       try {
-        const res = await fetch('/api/studio/posts');
-        // Post types are fetched from the API, but for now we'll load from client-side fetch
-        // In production, you might want to pass this as initial props
+        const res = await fetch('/api/studio/post-types');
         const data = await res.json();
-        // Extract unique types from posts
-        const types = new Map<string, PostType>();
-        if (data.posts) {
-          data.posts.forEach((post: any) => {
-            if (!types.has(post.post_type)) {
-              types.set(post.post_type, {
-                id: Math.random(),
-                slug: post.post_type,
-                label: post.post_type.charAt(0).toUpperCase() + post.post_type.slice(1),
-                description: '',
-                created_at: new Date().toISOString(),
-              });
-            }
-          });
+        if (res.ok && Array.isArray(data) && data.length > 0) {
+          setPostTypes(data as PostType[]);
+          return;
         }
-        setPostTypes(Array.from(types.values()));
+
+        // Fallback: derive types from existing posts if post-types API is temporarily unavailable.
+        const postsRes = await fetch('/api/studio/posts?status=all');
+        const postsData = await postsRes.json();
+        if (!postsRes.ok || !Array.isArray(postsData)) {
+          throw new Error(data?.error || 'Failed to fetch post types');
+        }
+
+        const map = new Map<string, PostType>();
+        postsData.forEach((post: { post_type?: string }) => {
+          const slug = String(post.post_type || '').trim();
+          if (!slug || map.has(slug)) return;
+          map.set(slug, {
+            id: Math.random(),
+            slug,
+            label: slug.charAt(0).toUpperCase() + slug.slice(1),
+            description: '',
+            created_at: new Date().toISOString(),
+          });
+        });
+        setPostTypes(Array.from(map.values()));
       } catch (error) {
         console.error('Failed to fetch post types:', error);
       }

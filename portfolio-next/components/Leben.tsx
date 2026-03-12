@@ -71,7 +71,7 @@ export default function Leben() {
       </svg>
 
       <section className="col col-lg-9 col-md-10 col-sm-12">
-        <h1>Leben</h1>
+        <h1>Life</h1>
 
         {posts.length === 0 ? (
           <article className="row py-3">
