@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Übung 01</title>
+    <link rel="preload" href="style.css" as="style" />
+    <link rel="preload" href="script.js" as="script" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="container-fluid">
+
+        <header class="row" id="header">
+            <div class="col-12 text-center py-3">
+                <h1>Übung 1 <small class="smallertext">- "Back to the Roots"</small></h1>
+            </div>
+        </header>
+
+        <section class="row justify-content-center" id="content">
+            <main class="col-12 col-md-8 p-3">
+                <div class="content-item">
+                    <h2>Willkommen!</h2>
+                    <p class="paragraf"id="paragraf-1">
+                        Hier analysieren wir die <a href="https://www.htwk-leipzig.de">HTWK-Seite</a> mitverschiedenen Tools.
+                    </p>
+                </div>
+                <div class="content-item">
+                    <h2>Lighthouse</h2>
+                    <p class="paragraf" id="paragraf-2">
+                        In Sachen Barrierefreiheit, Best Practices und Search Engine Optimization scheint die Seite sehr gut zu sein. In diesen Bereichen wird die sSeite mit 92 bis 96 von 100 Punkten bewertet.
+                    </p>
+                    <p class="paragraf" id="paragraf-3">
+                        Die Leistung lässt allerdings zu wünschen übrig. Der größte Abschnitt der Webseite hat ganze 7,9 Sekunden zum vollsständigen Laden benötigt. Das erste vollständig angezeigte Element brauchte 1,3 Sekunden und der Speed-Index beträgt 4,3 Sekunden.
+                    </p>
+                    <p class="paragraf" id="paragraf-4">
+                        <b>Lighthouse empfiehlt:</b>
+                        <ul class="list-group">
+                            <li class="list-group-item">moderne Bildformat verwenden (wie .webp oder .avif)</li>
+                            <li class="list-group-item">nicht kritische Stil und Ressourcen zurückstellen</li>
+                            <li class="list-group-item">Textkomprimierung aktivieren</li>
+                            <li class="list-group-item">nicht benötigte scripts erst bei Verwendung laden</li>
+                            <li class="list-group-item">Bilder mit mehreren Dimensionen anbieten</li>
+                        </ul>
+                    </p>
+                </div>
+
+            </main>
+        </section>
+
+        <footer class="row" id="footer">
+            <div class="col-12 text-center py-2 d-flex justify-content-center">
+                <p>
+                    Kontakt: <a href="mailto:paul.thomasius@stud.htwk-leipzig.de">Paul Thomasius</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Übung 06</title>
+    <link rel="preload" href="style.css" as="style" />
+    <link rel="preload" href="script.js" as="script" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Übung 6 - "ARBEITE SCHNELLER!!!"</h1>
+    </header>
+
+    <div class="grid-container">
+        <aside class="menu">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="https://www.heise.de/news/Huawei-Mate-XT-Das-Doppel-Foldable-ausprobiert-9939970.html">Weitere Meinungen</a></li>
+                    <li><a href="https://www.chip.de/news/Weltneuheit-Das-erste-doppelte-Foldable-Smartphone-ausprobiert_185489605.html">Noch mehr Meinungen</a></li>
+                    <li><a href="mailto:paul.thomasius@stud.htwk-leipzig.de">Kontakt</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <section class="content">
+            <div class="content-item">
+                <h2>Willkommen!</h2>
+                <p id="Willkommen">Hallo Welt!</p>
+            </div>
+            <div class="content-item">
+                <h2>Berechnung mit Web Worker</h2>
+                <input type="number" id="numberfield">
+                <p id="countdownCalc">Berechnungszeit: <span id="timerCalc">0.00</span> Sekunden</p>
+                <button id="startCalc">Berechnung starten</button>
+                <p>Ergebnis: <span id="resultCalc">Noch keine Berechnung</span></p>
+            </div>
+            <div class="content-item">
+                <h2>Sortieren mit Web Worker</h2>
+                <input type="number" id="numberfield0">
+                <input type="number" id="numberfield1">
+                <input type="number" id="numberfield2">
+                <input type="number" id="numberfield3">
+                <input type="number" id="numberfield4">
+                <input type="number" id="numberfield5">
+                <p id="countdownSort">Sortierzeit: <span id="timerSort">0.00</span> Sekunden</p>
+                <button id="startSort">Sortieren starten</button>
+                <p>Ergebnis: <span id="resultSort">Noch keine Sortierung erfolgt</span></p>
+            </div>
+            <div class="content-item">
+                <h1> Web Workers Example </h1>
+                <p>
+                    If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23. Enter the upper and lower bound below and the program will use a Web Worker to run a background thread to calculate the number of multiples of 3 or 5 between the two numbers, as well as the sum of these numbers.
+                </p>
+                <p>
+                    Web Workers allow for work to be done while leaving the user experience/interface uninterrupted. To illustrate this point, this example includes a loading icon that will display while the calculations are being done in the background.
+                </p>
+
+                <label for="lower">Lower Bound <input id="lower" type="text" value="0" maxlength="8" /></label><br />
+                <label for="upper">Upper Bound <input id="upper" type="text" value="0" maxlength="8" /></label><br />
+                <button id="calculate">Calculate</button>
+
+                <p id="loading" style="display: none;">
+                    <i class="fa fa-spinner fa-pulse"></i>
+                </p>
+                <p id="result"></p>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>Kontakt: <a href="mailto:paul.thomasius@stud.htwk-leipzig.de">Paul Thomasius</a></p>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

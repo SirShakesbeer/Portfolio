@@ -1,0 +1,124 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --secondary-bg-color: #343a40;
+    --secondary-text-color: #ffffff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    
+    font-family: Arial, sans-serif;
+}
+
+#footer {
+    background-color: var(--secondary-bg-color);
+    color: var(--secondary-text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#header {
+    background-color: var(--secondary-bg-color);
+    color: var(--secondary-text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.content-item {
+    padding: .5rem;
+    margin-bottom: .7rem;
+}
+
+#start {
+    display: flex;
+    flex-direction: row;
+	width: auto;
+    max-width: 100%;
+    flex-wrap: wrap;
+	height: auto;
+    min-height: 15rem;
+	padding: 1em;
+	border: 1px var(--secondary-bg-color);
+}
+
+#ziel {
+    display: flex;
+    flex-direction: row;
+	width: auto;
+    max-width: 100%;
+    flex-wrap: wrap;
+	height: auto;
+    min-height: 15rem;
+	padding: 1em;
+	border: 1px var(--secondary-bg-color);
+}
+
+#ziel.erreicht {
+    background: #ebf5d7;
+}
+
+.smallertext {
+    font-size: .8em;
+    font-weight: 100;
+}
+
+#Willkommen {
+    background-color:green;
+}
+
+img {
+    max-width: 100%;
+    object-fit: contain;
+    margin: 1rem;
+}
+
+.dragimg {
+    height: 15rem;
+}
+
+.aufgabenSpalte {
+    display: flex;
+    flex-direction: column;
+	height: auto;
+    min-height: 15rem;
+	padding: 1em;
+    gap: 1rem;
+	border: 1px var(--secondary-bg-color);
+}
+
+.task {
+    padding: 1rem;
+    border-radius: 5px;
+    color: var(--secondary-text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task.done {
+    text-decoration: line-through;
+    background-color: #d3d3d3;
+    color: #6c757d;
+}
+
+button {
+    margin-left: 0.5rem;
+}
+
+[draggable=true] {
+	cursor: move;
+}
+
+[draggable=false] {
+	cursor: not-allowed;
+}

@@ -1,0 +1,12 @@
+canvas {
+    border: 1px solid black;
+}
+
+.everything {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    margin:auto;
+}

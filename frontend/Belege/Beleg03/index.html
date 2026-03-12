@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Storytelling</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+            <ul class="nav-links">
+                <li><a href="#intro-section">Home</a></li>
+                <li><a href="#definition">Def</a></li>
+                <li><a href="#intro">General</a></li>
+                <li><a href="#tools">Tools</a></li>
+                <li><a href="#demo">Live-Demo</a></li>
+                <li><a href="#fazit">Fazit</a></li>
+                <li><a href="#beispiele">Beispiele</a></li>
+                <li><a href="#Fragerunde">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+        <div id="intro-section" class="cinematic-intro">
+            <div class="overlay">
+                <h1>Visual Storytelling im Web</h1>
+                <div class="quote">
+                    <p>"Ein Bild sagt mehr als tausend Worte."</p> 
+                </div>
+                <p id="quelle"> (Redewendung, unbekannte Herkunft) </p> 
+                <button onclick="toggleVisualStorytelling()">look</button>
+            </div>
+        </div>
+        <section id="definition"> 
+            <div class="definition1-container">
+                <div class="definition1"> 
+                    <h2>Definition</h2>
+                    <p>"Visual Storytelling ist die Kunst, eine Geschichte mithilfe visueller Elemente wie Bilder, Grafiken, Videos und Animationen zu erzählen. <br> 
+                         Ziel ist es, komplexe Inhalte auf emotionale Weise zu vermitteln und dem Publikum <br> 
+                          durch ansprechende Bilder und klare Strukturen den Kern der Botschaft näherzubringen." </p> <p  id="quelle"> [Q1] </p>
+                    
+                </div>
+        </section>
+        <section id="intro">
+            <div class="definition-container">
+                <div class="definition" >
+                    <h2>Warum visual Storytelling? </h2>
+                    <p>
+                        * Besucher auf der Seite behalten <br> 
+                        * Produkte einprägend präsentieren 
+                       <p1 id="quelle"> [Q2] </p1> <br> 
+                        Picture Superiority Effect: <br> 
+                        * Menschen merken sich Bilder besser als Text  <p1 id="quelle"> [Q3] </p1> <br> 
+                    </p>
+                    
+                </div>
+
+                <!-- Graph hier einfügen  -->
+                <div class="facts" id="facts-box">
+                    <div id="myPlot" style="width:100%;max-width:400px"></div>
+                <script>
+
+                    const xArray = [98, 90, 88];
+                    const yArray = [ "Bild ",  "Satz ",  "Wort "];
+                    
+                    const data = [{
+                      x:xArray,
+                      y:yArray,
+                      type:"bar",
+                      orientation:"h",
+                      marker: {color:"rgba(255, 183, 0, 0.7)"},
+                      text:xArray,
+                      textposition:'auto',
+                    }];
+                    
+                    const layout = {
+    title: {
+        text: "Wiedererkennung von Informationsformen",
+        font: {
+            color: "white" // Titeltext in Weiß
+        }
+    },
+    paper_bgcolor: 'rgba(1, 0, 0, 0.3)', // Hintergrund der Zeichenfläche
+    plot_bgcolor: 'rgba(255, 255, 255, 1)', // Hintergrund des Diagrammbereichs
+    xaxis: {
+        tickfont: { color: "white" }, // X-Achsen Beschriftung in Weiß
+        title: { text: "Erkennungsrate (%)", font: { color: "white" } } // Titel der X-Achse in Weiß
+    },
+    yaxis: {
+        tickfont: { color: "white" }, // Y-Achsen Beschriftung in Weiß
+        title: { text: "Informationsform", font: { color: "white" } } // Titel der Y-Achse in Weiß
+    }
+};
+
+                    
+                    Plotly.newPlot("myPlot", data, layout);
+                        
+                    </script>
+            </div>
+ 
+        </section>
+        
+        <section id="o">
+            <div class="textfeld">
+                <h2>Prinizpien des Visual Storytelling </h2>
+            
+                <p><strong>📌 1. Emotionen wecken</strong></p>
+                <ul>
+                    <li>"The more emotionally invested you are in anything in your life, <br> 
+                        the less critical and the less objectively observant you become." <p1 id="quelle"> [Q4]</p1> </li>
+                </ul>
+            
+                <p><strong>📌 2. Struktur & Orientierung schaffen</strong></p>
+                <ul>
+                    <li>Gesetz der Nähe, Ähnlichkeit, Einfachheit, Fortsetzung und Geschlossenheit nutzen <p1 id="quelle"> [Q5]</p1></li>
+                    
+                </ul>
+            
+                <p><strong>📌 3. Interaktion mit dem Nutzer</strong></p>    
+                <ul>
+                    <li>Videos, Übergänge und Animationen machen Websites ansprechender</li>
+                </ul>
+            </div>
+            <!-- Button zum Umschalten -->
+            <button class="toggle-gallery-btn" onclick="toggleGalleryAndText()">Galerie anzeigen</button>
+            
+
+
+<!-- Bildgalerie (standardmäßig versteckt) -->
+<div class="gallery-container hidden" id="gallery-container">
+    <div class="gallery">
+        <img src="image1.jpg" class="gallery-item" alt="Bild 1">
+        <img src="image2.jpg" class="gallery-item" alt="Bild 2">
+        <img src="image3.jpg" class="gallery-item" alt="Bild 3">
+        <img src="image4.jpg" class="gallery-item" alt="Bild 4">
+        <img src="image5.jpg" class="gallery-item" alt="Bild 5">
+    </div>
+    <div class="gallery-links">
+        <a href="https://imweb.imn.htwk-leipzig.de/~schwarz/ " class="gallery-link">1</a>
+        <a href="https://www.apple.com/de/iphone-16-pro/ " class="gallery-link">2</a>
+    </div>
+</div>
+
+</section>
+
+
+
+    <section id="tools">
+        <div class="tools">
+            <h2>Tools</h2>
+
+            <div class="tool" id="d3">
+                <h3>D3.js</h3>
+                <p>
+                    = data driven documents
+                </p>
+                <ul>
+                    <li>JavaScript-Bibliothek für interaktive und datenbasierte Visualisierungen</li>
+                    <li>Nutzt SVG, HTML und CSS, um Daten dynamisch darzustellen</li>
+                    <li>ermöglicht animierte und interaktive Diagramme</li>
+                </ul>
+                <p>
+                    Offizielle Website: <a href="https://d3js.org">D3.js</a>
+                    <br>
+                    Simplere Alternative: <a href="https://observablehq.com/plot/">Plot</a> von Observable
+                </p>
+            </div>
+            <br> 
+            <br> 
+            <img src="tools/d3.png" class="toolimg" alt="Diagramm mit d3">
+            <div class="tool" id="threejs"> 
+                <h3>Three.js</h3>
+                <ul>
+                    <li>JavaScript-Bibliothek für 3D-Grafiken und Animationen im Browser</li>
+                    <li>Ermöglicht immersive Erlebnisse durch WebGL</li>
+                    <li>z.B. durch Verknüpfung mit Scroll-Effekten</li>
+                </ul>
+                <p>
+                    Offizielle Website: <a href="https://threejs.org">Three.js</a>
+                </p>
+            </div>
+            <div class="tool" id="scrollmagic">
+                <h3>ScrollMagic</h3>
+                <ul>
+                    <li>JavaScript-Bibliothek, um Scroll-basierte Animationen zu erstellen</li>
+                    <li>gut für Parallax-Effekte</li>
+                    <li><a href="https://alfredservice.com">Beispiel</a></li>
+                </ul>
+                <p>
+                    Offizielle Website: <a href="http://scrollmagic.io">ScrollMagic</a>
+                </p>
+            </div>
+            <div class="tool" id="lottie">
+                <h3>Lottie Files</h3>
+                <ul>
+                    <li>Open-Source-Tool für animierte SVGs und JSON-basierte Animationen</li>
+                    <li>Konvertiert After Effects-Animationen für das Web</li>
+                </ul>
+                <p>
+                    Offizielle Website: <a href="https://lottiefiles.com">LottieFiles</a>
+                </p>
+            </div>
+            <dotlottie-player src="https://lottie.host/be357018-c19a-496a-a954-57a2b416d9c8/Sg6CoIA1fG.lottie" background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay></dotlottie-player>
+            <div class="tool" id="mapbox">
+                <h3>Mapbox</h3>
+                <ul>
+                    <li>API für interaktive Karten und geobasierte Visualisierungen</li>
+                    <li>Unterstützt Storytelling durch ortsbezogene Informationen</li>
+                    <li>Anpassbare Karten mit Marker-Clustering und Animation</li>
+                    <li>auch interessant: <a href="https://storymap.knightlab.com">StoryMap</a> - für historische, geobasierte Infos</li>
+                </ul>
+                <p>
+                    Offizielle Website: <a href="https://www.mapbox.com/">Mapbox</a>
+                </p>
+            </div> 
+            <br> 
+            <br> 
+            <img src="tools/mapbox.png" style="width: 60%; height: auto;" class="toolimg" alt="Singapore at dusk in Mapbox Standard">
+            <p class="quelle">Quelle: <a href="https://www.mapbox.com/blog/global-cities-3d-landmarks">mapbox</a>, 2025. Mehr: <a href="https://labs.mapbox.com/standard-style/?lightPreset=dusk#14.9/1.28593/103.85662/0/48">interactive map</a></p>
+            <div class="tool" id="gsap">
+                <h3>GSAP</h3>
+                <p>
+                    = GreenSock Animation Platform
+                </p>
+                <ul>
+                    <li>Animationsbibliothek für komplexe, flüssige Web-Animationen</li>
+                    <li>Unterstützt Timeline-basierte Animationen und Interaktivität</li>
+                    <li>Perfekt für Mikrointeraktionen und dynamische Webseiten-Elemente</li>
+                </ul>
+                <p class="quelle">
+                    Offizielle Website: <a href="https://greensock.com">GSAP</a>
+                </p>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="boxscroll">
+                <img src="tools/gear.png">
+            </div>
+        </div>
+    </section>
+        
+    <section id="demo">
+        <h2>Live-Demo</h2>
+        <div>
+            <p>Mit GSAP lassen sich simple Animationn bauen.</p>
+            <p>
+                <code>
+                    gsap.timeline({ repeat: -1 })
+                    <br>
+                    .to(".box", { duration: 1, x: 200, ease: "power2.inOut" }) // Nach rechts bewegen
+                    <br>
+                    .to(".box", { duration: 1, y: 200, ease: "power2.inOut" }) // Nach unten bewegen
+                    <br>
+                    .to(".box", { duration: 1, x: 0, ease: "power2.inOut" })   // Nach links bewegen
+                    <br>
+                    .to(".box", { duration: 1, y: 0, ease: "power2.inOut" });  // Nach oben bewegen
+                </code>
+            </p>
+        </div>
+        <div class="anim">
+            <div class="box boxsimple">
+            
+            </div>
+        </div>
+        <br> <br> 
+        <div class="anim">
+            <div class="box boxsimple">
+            
+            </div>
+            <div class="box boxsimple">
+    
+            </div>
+        </div>
+        <div>
+            <p>
+                <code>
+                    gsap.timeline({ repeat: -1 })
+                    <br>
+                    .to(".box", { stagger:1, duration: 1, x: 200, ease: "power2.inOut" }) // Nach rechts bewegen
+                    <br>
+                    .to(".box", { stagger:1, duration: 1, y: 200, ease: "power2.inOut" }) // Nach unten bewegen
+                    <br>
+                    .to(".box", { stagger:1, duration: 1, x: 0, ease: "power2.inOut" })   // Nach links bewegen
+                    <br>
+                    .to(".box", { stagger:1, duration: 1, y: 0, ease: "power2.inOut" });  // Nach oben bewegen
+                </code>
+            </p>
+        </div>
+        <div class="anim">
+            <div class="box boxdelay">
+            
+            </div>
+            <div class="box boxdelay">
+                
+            </div>
+        </div>
+    </section>
+    
+    <section id="fazit"> 
+        <h1>Fazit</h1> 
+        <div> 
+        
+        </div>
+    </section>
+        
+    </section>
+    
+       
+        <section id="beispiele">
+            
+            <div class="gallery-container1">      
+                <div class="gallery1">
+                    <img src="Bild1.jpg" class="gallery-item" alt="Bild1">
+                    <img src="Bild2.jpg" class="gallery-item" alt="Bild2">
+                    <img src="Bild3.jpg" class="gallery-item" alt="Bild3">
+                    <img src="Bild4.jpg" class="gallery-item" alt="Bild4">
+                    <img src="Bild5.jpg" class="gallery-item" alt="Bild5">
+                </div>
+            </div>
+        </section>
+    <section id="Fragerunde" > 
+        <h2>"The important thing is not to stop questioning. " </h2> 
+        <div> 
+            <br> 
+        <p> - Albert Einstein </p>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 Visual Storytelling Team</p>
+        <p> Leon Pfingst, Paul Thomasius, Kevin Viehweger </p>
+        <div id="sources">
+            <h3>Quellenverweise</h3>
+             <ul>
+                <li><p>Bilder: &copy; Kevin Viehweger </p></li>
+                <li><a href="https://www.1st-row.de/wiki/visual-storytelling"> [Q1] Quelle 1 </a></li>
+                <li><a href="https://www.1st-row.de/wiki/visual-storytelling">[Q2] Quelle 2</a></li>
+                <li><a href=" https://direct.mit.edu/jocn/article-abstract/23/5/1247/5093/Picture-Superiority-Doubly-Dissociates-the-ERP?redirectedFrom=fulltext"> [Q3] Quelle 3</a></li>
+                <li><a href="https://www.youtube.com/watch?v=Nj-hdQMa3uA">[Q4] Quelle 4</a></li>
+                <li><a href="https://stephanieakowalski.de/visual-storytelling-in-der-pr/">[Q5] Quelle 5</a></li>
+                <li><a href="https://www.youtube.com/watch?v=Nj-hdQMa3uA"> [Q6] Quelle 6 </a></li>
+                <a href="https://www.flaticon.com/free-icons/cog-wheel" title="cog wheel icons">Cog wheel icons created by Daniel ceha - Flaticon</a> 
+
+            </ul>
+        </div>
+    </footer>
+    <script defer src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</body>
+</html>

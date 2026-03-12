@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="author" content="Paul Thomasius">
+    <meta name="description" content="Portfolio von Paul Thomasius. Hier finden Sie Informationen über mich, meine Projekte und meine Hobbys.">
+    <meta name="keywords" content="Portfolio, web design, web development, HTWK Leipzig, Medieninformatik, Paul Thomasius">
+    <meta property="og:image" content="assets/icons/letter-uppercase-circle-p-svgrepo-com.svg" />
+    <meta property="og:description" content="Portfolio von Paul Thomasius. Hier finden Sie Informationen über mich, meine Projekte und meine Hobbys." />
+    <meta property="og:title" content="Paul Thomasius - Portfolio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.imn.htwk-leipzig.de/~pthomasi" />
+
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "Paul Thomasius",
+          "url": "https://www.imn.htwk-leipzig.de/~pthomasi",
+          "image": "assets/icons/letter-uppercase-circle-p-svgrepo-com.svg"
+          ],
+          "jobTitle": "Student",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "HTWK Leipzig"
+          }
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Paul Thomasius - Portfolio",
+          "url": "https://www.imn.htwk-leipzig.de/~pthomasi"
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org/",
+          "@type": "ImageObject",
+          "contentUrl": "/assets/img/portrait.webp",
+          "creditText": "Luise Kraft",
+          "creator": {
+            "@type": "Person",
+            "name": "Luise Kraft"
+           },
+          "copyrightNotice": "Luise Kraft"
+        },
+        {
+            "@context": "https://schema.org/",
+            "@type": "ImageObject",
+            "contentUrl": "/assets/img/back.webp",
+            "creditText": "Tom Thomasius",
+            "creator": {
+              "@type": "Person",
+              "name": "Tom Thomasius"
+             },
+            "copyrightNotice": "Tom Thomasius"
+          }
+    </script>
+
+    <link rel="icon" href="assets/icons/letter-uppercase-circle-p-svgrepo-com.svg" type="image/svg+xml">
+    <title>Paul - Portfolio</title>
+
+    <link rel="preload" as="style" href="style.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/EasePack.min.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/MotionPathPlugin.min.js" defer></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/lozad@1.14.0/dist/lozad.min.js" defer></script>
+    <script type="module" src="script.min.js" defer></script>
+    <script type="module" src="modules/animations.min.js" defer></script>
+    <script type="module" src="modules/scene.min.js" defer></script>
+</head>
+<body>
+    
+    <div class="container-fluid">
+
+        <header class="row" id="header">
+            <div class="col-12 header-bg">
+            </div>
+            <div class="col-12 text-center py-4" id="title">
+                    <h1><img src="assets/icons/letter-uppercase-circle-p-svgrepo-com.svg" alt="P" class="logo"> Paul Thomasius</h1>
+            </div>
+        </header>
+
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item"><a class="nav-link" href="#header">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#leben">Leben</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#fähigkeiten">Fähigkeiten</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#projekte">Projekte</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#hobbys">Hobbys</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#referenzen">Referenzen</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#footer">Kontakt</a></li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Übungen
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="Uebungen/Uebung01/index.html">Übung 1</a></li>
+                                <li><a class="dropdown-item" href="Uebungen/Uebung02/index.html">Übung 2</a></li>
+                                <li><a class="dropdown-item" href="Uebungen/Uebung03/index.html">Übung 3</a></li>
+                                <li><a class="dropdown-item" href="Uebungen/Uebung04/index.html">Übung 4</a></li>
+                                <li><a class="dropdown-item" href="Uebungen/Uebung05/index.html">Übung 5</a></li>
+                                <li><a class="dropdown-item" href="Uebungen/Uebung06/index.html">Übung 6</a></li>
+                                <li><a class="dropdown-item" href="Uebungen/Uebung07/index.html">Übung 7</a></li>
+                                <li><a class="dropdown-item" href="Uebungen/Uebung08/index.html">Übung 8</a></li>
+                                <li><a class="dropdown-item" href="Uebungen/Uebung09/index.html">Übung 9</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Belege
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="Belege/Beleg01/Aufgabe1/index.html">Beleg 1.1</a></li>
+                                <li><a class="dropdown-item" href="Belege/Beleg01/Aufgabe2/index.html">Beleg 1.2</a></li>
+                                <li><a class="dropdown-item" href="Belege/Beleg01/Aufgabe3/index.html">Beleg 1.3</a></li>
+                                <li><a class="dropdown-item" href="Belege/Beleg02/index.html">Beleg 2</a></li>
+                                <li><a class="dropdown-item" href="Belege/Beleg03/index.html">Beleg 3</a></li>
+                                <li><a class="dropdown-item" href="Belege/Beleg04/index.html">Beleg 4 - Aufgabe 5</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <main class="row justify-content-center" id="content">
+
+            <section class="col-10 col-md-10 col-sm-12 py-3">
+
+                <section class="content-item row justify-content-md-center" id="about">
+                    <article class="col col-lg-9 col-md-10 col-sm-12">
+                        <h1>About</h1>
+                        <p>
+                            Hey! Mein Name ist Paul und ich studiere Medieninformatik an der HTWK Leipzig. Bei Fragen und Hinweisen, <a href="#footer">schreib mich gerne an</a>. Viel Spaß auf meiner Seite! :)
+                        </p>
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10 col-md-10 col-sm-12">
+                                <img src="assets/img/portrait.webp" alt="Portrait von Paul Thomasius" class="portrait">
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="content-item row justify-content-md-center" id="leben">
+                    <svg width="100%" height="100%" viewBox="0 0 800 2000" preserveAspectRatio="none" id="pathSVG">
+                        <path id="path" d="M 0 50 Q 150 125 250 625 Q 275 750 300 1125 Q 350 1375 400 1125 C 400 875 250 1000 300 1375 C 350 1625 400 1750 250 2000 C 150 2250 350 2250 300 2500 C 250 2750 100 2750 400 3125 C 550 3375 550 3750 800 3750 "/>
+                    </svg>
+                    <svg width="100%" height="100%" viewBox="0 0 800 1400" id="ballSVG">
+                        <defs><linearGradient gradientTransform="rotate(156, 0.5, 0.5)" x1="50%" y1="0%" x2="50%" y2="100%" id="ffflux-gradient"><stop stop-color="#0b4f6c" stop-opacity="1" offset="0%"></stop><stop stop-color="#88ce02" stop-opacity="1" offset="100%"></stop></linearGradient><filter id="ffflux-filter" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.004 0.003" numOctaves="2" seed="2" stitchTiles="stitch" x="0%" y="0%" width="100%" height="100%" result="turbulence"></feTurbulence>
+                            <feGaussianBlur stdDeviation="21 12" x="0%" y="0%" width="100%" height="100%" in="turbulence" edgeMode="duplicate" result="blur"></feGaussianBlur>
+                            <feBlend mode="screen" x="0%" y="0%" width="100%" height="100%" in="SourceGraphic" in2="blur" result="blend"></feBlend>
+                            
+                          </filter></defs>
+                        <circle id="pathBall" cx="0" cy="0" r="100" fill="url(#ffflux-gradient)"/>
+                    </svg>
+                    
+                    <section class="col col-lg-9 col-md-10 col-sm-12">
+                        
+                        <h1>Leben</h1>
+                        <article class="row py-3">
+                            <h3>Der Ursprung</h3>
+                            <p>
+                                Offiziell wurde ich in Schkeuditz geboren aber ich lebe schon mein ganzes Leben in Leipzig.
+                            </p>
+                        </article>
+                        <article>
+                            <h3>Schule</h3>
+                            <p>
+                                Ich begann an der Grundschule Wiederitzsch und bin nach der vierten Klasse auf die Oberschule (ebenfalls in Wiederitzsch) gewechselt. Dort war ich im Schülerrat tätig und spielte neben der Schule Schlagzeug. Nach der zehnten Klasse konnte ich aufs Gymnasium wechseln, was ich auch tat aber zunächst folgte ein Auslandsjahr in Kanada.
+                            </p>
+                            <h4>Praktika</h4>
+                            <p>
+                                Während meiner Schulzeit habe ich zwei Praktika bei verschiedenen Arbeitgebern gemacht. Mein erstes Praktikum machte ich trotz brillenlosigkeit bei <a href="https://www.augenoptik-findeisen.de">Augenoptik Findeisen</a>. Das zweite Praktikum machte ich im <a href="https://www.leipzig.de/buergerservice-und-verwaltung/aemter-und-behoerdengaenge/behoerden-und-dienstleistungen/dienststelle/familieninfobuero-5132fib">Familien-Info-Büro Leipzig</a>. Auch, wenn beide Praktika nicht relevant wirken, habe ich viel über die Arbeitswelt und den Umgang mit verschiedenen Menschen (Mitarbeiter:innen und Kund:innen) gelernt.
+                            </p>
+                        </article>
+                        <article>
+                            <h3>Kanada</h3>
+                            <p>
+                                Im Herbst 2019 flog ich nach Vancouver um dort zehn Monate eine kanadische Schule zu besuchen. <a href="https://secondary.sd42.ca/thss/">Thomas Haney Secondary School</a> hat mich und viele weitere internationale Schüler willkommen gehießen, wodurch ich viele neue Freunde und Kontakt in anderen Ländern knüpfen konnte. Das offizielle Motto von <abbr title="Thomas Haney Secondary School">THSS</abbr> lautet <q>Seek Challenge, Experience Success</q>. Dises Motto unterstützt meinen kleinen Perfektionismus, der mich manchmal überkommt und soll das <a href="https://secondary.sd42.ca/thss/the-thss-difference/">self-directed learning</a>-Konzept der Schule unterstützen. Im Scherz hatten wir als Schülerschaft unser eigenes Motto passend zu diesem selbst organisierenden Lern-Konzept: <q>Procrastinate.</q>.
+                            </p>
+                            <p>
+                                Der alltägliche Umgang mit Englisch, vor allem durch Freunde aber auch wegen meiner Host-Family, hat mir natürlich auch sehr geholfen die Sprache besser zu verstehen und alltäglich anwenden zu können.
+                            </p>
+                            <h4>VMUN</h4>
+                            <p>
+                                Leider traf uns in Kanada im Jahr 2020 auch der Corona-bedingte Lockdown, weshalb viele Events und Treffen mit Freunden ausfallen mussten. Zum Glück konnte einiges auch schon davor geschehen, wie zum Beispiel <abbr title="Vancouver Model United Nations">VMUN</abbr>. Bei den <a href="https://vmun.com">Vancouver Model United Nations</a> habe ich im Kommitee <abbr title="Disarmement and International Security Commitee">DISEC</abbr> die Delegation von Zypern übernommen. Dabei konnte ich erneut Erfahrungen mit neuen Menschen sammeln und konnte einen Einblick in den Entscheidungsablauf großer Kommitees bekommen.
+                            </p>
+                        </article>
+                        <article>
+                            <h3>Abschluss</h3>
+                            <p>
+                                Nachdem ich wieder in Deutschland angekommen bin machte ich mein Abitur am <a href="https://www.leibniz-gymnasium-leipzig.de">Leibniz-Gymnasium Leipzig</a>. Dafür musste ich aber zunächst noch ein Schleifenjahr vollenden, da ich von einer Oberschule kam. Dadurch und wegen des Auslandsjahres wurde mein Schullaufbahn um zwei Jahre verlängert. Daher habe ich direkt nach meinem Absschluss angefangen zu studieren.
+                            </p>
+                        </article>
+                        <article>
+                            <h3>Studium</h3>
+                            <p>
+                                Aufgrund meines Interesses an Computern (und wie viele andere Informatik-Studierende an Computerspielen) entschied ich mich für den Studiengang Medieninformatik an der <a href="https://www.htwk-leipzig.de">HTWK-leipzig</a>. Nebenbei bin ich Teil des <a href="https://streamteam.htwk-leipzig.de">Streamteams</a> und habe schon bei einigen Produktionen mitgewirkt.
+                            </p>
+                        </article>
+                    </section>
+                </section>
+
+                <section class="tunnel row justify-content-md-center" id="fähigkeiten">
+                    <div class="px-0" id="tunnelCanvas">
+                        <canvas></canvas>
+                    </div>
+                    <div class="col tunnel-content col-lg-9 col-md-10 col-sm-12">
+                        <div class="tunnel-slide row" id="tunnel-title">
+                            <div class="tunnel-card col-9">
+                                <h1>Fähigkeiten</h1>
+                            </div>
+                        </div>
+                        <div class="tunnel-slide row">
+                            <div class="tunnel-card col col-lg-9 col-md-10 col-sm-12">
+                                <div class="ms-2 me-auto row">
+                                    <h3>Programmiersprachen</h3>
+                                    <ul class="list-group list-group-horizontal">
+                                        <li class="list-group-item">C/C++</li>
+                                        <li class="list-group-item">Java</li>
+                                        <li class="list-group-item">C#</li>
+                                        <li class="list-group-item">JavaScript</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tunnel-slide row">
+                            <div class="tunnel-card col col-lg-9 col-md-10 col-sm-12">
+                                <div class="ms-2 me-auto">
+                                    <h3>Web-Design</h3>
+                                    <p>
+                                        Durch die Module "Multimedia I" und "Multimediale Webprogrammierung" habe ich sowohl <em>HTML</em>, <em>CSS</em> und <em>JavaScript</em> als auch viele weiter Tools und Frameworks, wie <em>Bootstrap</em> und <em>GSAP</em> kennengelernt und ausführlich genutzt.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tunnel-slide row">
+                            <div class="tunnel-card col col-lg-9 col-md-10 col-sm-12">
+                                <div class="ms-2 me-auto row">
+                                    <div class="smallertext">Sprachen</div>
+                                        <h3>Englisch</h3>
+                                        <p>
+                                            Im Bereich Informatik: Englisch Level C1.1 <a href="docs/Englisch_C1.1.pdf">Zertifikat</a>
+                                        </p>
+                                        <p>
+                                            Durch mein Auslandsjahr kann ich mich alltäglich und professionell flüssig ausdrücken.
+                                        </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tunnel-slide row">
+                            <div class="tunnel-card col col-lg-9 col-md-10 col-sm-12">
+                                <div class="ms-2 me-auto row">
+                                    <div class="smallertext">Sprachen</div>
+                                    <h3>Französisch</h3>
+                                    <p>
+                                        Grundlagen sind vorhanden durch viele Jahre Französisch-Unterricht in Deutschland als auch in Kanada.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tunnel-slide row">
+                            <div class="tunnel-card col col-lg-9 col-md-10 col-sm-12">
+                                <div class="ms-2 me-auto">
+                                    <div class="smallertext">Tools</div>
+                                    <h3>Microsoft Office</h3>
+                                    <p>
+                                        An der THSS gab es ein Angebot zum absolvieren von Microsoft-Office Kursen für Zertifikate.
+                                    </p>
+                                    <p>
+                                        <ul>
+                                            <li>Zertifikat: <a href="docs/Microsoft_Office.pdf">Microsoft Office Specialist certification</a></li>
+                                            <li>Zertifikat: <a href="docs/word.pdf">Microsoft Office Word</a></li>
+                                            <li>Zertifikat: <a href="docs/excel.pdf">Microsoft Office Excel</a></li>
+                                            <li>Zertifikat: <a href="docs/powerpoint.pdf">Microsoft Office PowerPoint</a></li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tunnel-slide row">
+                            <div class="tunnel-card col col-lg-9 col-md-10 col-sm-12">
+                                <div class="ms-2 me-auto">
+                                    <div class="smallertext">Tools</div>
+                                    <h3>Unity</h3>
+                                    <p>
+                                        Während meines Aufenthalts in Kanada belegte ich den Kurs Game Design und programmierte ein Spiel in der Unity Game Engine mit C#.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tunnel-slide row">
+                            <div class="tunnel-card col col-lg-9 col-md-10 col-sm-12">
+                                <div class="ms-2 me-auto">
+                                    <div class="smallertext">Tools</div>
+                                        <h3>DaVinci Resolve</h3>
+                                        <p>
+                                            Durch den Medienkurs meiner Schule hab ich einige Filme gedreht und geschnitten. Dafür habe ich DaVinci Resolve verwendet.
+                                        </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tunnel-slide row">
+                            <div class="tunnel-card col col-lg-9 col-md-10 col-sm-12">
+                                <div class="ms-2 me-auto">
+                                    <h3>Teamfähigkeit</h3>
+                                    <p>
+                                        An der Oberschule Wiederitzsch war ich mehrere Jahre im Schülerrat tätig, am Leibniz-Gymnasium Leipzig wurde ich zum Schülersprecher gewählt und war somit auch Teil des <a href="https://ssrleipzig.de">Stadtschülerrat Leipzig</a>.
+                                    </p>
+                                    <p>
+                                        Die Teilnahme an Events, wie Vancouver Model United Nations 2020 oder Streamteam-Produktionen, haben mir ebenfalls geholfen meine Teamfähigkeit zu stärken. 
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tunnel-slide row" id="tunnel-end">                           
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="content-item row justify-content-md-center" id="projekte">
+                    <section class="col col-lg-9 col-md-10 col-sm-12">
+                        
+                        <h1>Projekte</h1>
+
+                        <article>
+                            <h3>Video-Bearbeitung</h3>
+                            <p>
+                                "Wie wird Sauerkraut hergestellt?" - Eine Frage so alt wie die Zeit selbst. Genauso wichtig wie dringend. Daher habe ich mich aus persönlichem Interesse (aber vorallem für ein Schulprojekt) daran gemacht diese Frage zu beantworten. Über mehrere Wochen erstreckte sich dieses Projekt und es belohnte mich mit einer okay-schmeckenden Beilage und einer sehr guten Note. Vor allem aber habe ich mich mit einem Video verewigt, welches auch heute noch neuen Schülern im Bionik-Kurs meiner Schule gezeigt wird.
+                            </p>
+                            <p class="py-2" id="video">
+                                <video class="lozad" controls>
+                                    <source data-src="vid/tutorial.webm" type="video/webm" muted playsinline>
+                                    Ihr Browser unterstützt das Video-Tag nicht.
+                                </video>
+                            </p>
+                            <p>
+                                Für ein Schulprojekt habe ich Sauerkraut hergestellt und den Prozess dokumentiert. Das Video wurde von mir gefilmt und geschnitten. Der Beitrag ist auf youtube unlisted, hier biete ich Ihnen allerdings einen exklusiven Einblick.
+                            </p>
+                        </article>
+
+                        <article>
+                            <h3>Arduino-Schmarduino</h3>
+                            <p>
+                                Im ersten Semester der Studiengänge Informatik und Medieninformatik nimmt man laut Plan am Modul Digitaltechnik I teil. In zwei Praktika muss man im Hardware-Labor verschiedene Aufgaben bewältigen. Die erste Aufgabe hat ein wenig mit Software-Hardware Interaktion und Elektrotechnik zutun. Im zweiten Praktikum soll eine Lichtshow für einen 30 Sekunden langen Song-Ausschnitt auf einem Arduino programmiert werden. Beide Praktika wurden in Gruppen bearbeitet und haben sogar ziemlich Spaß gemacht.
+                            </p>
+                            <p>
+                                Im Informatik Studiegang gibt es auch im zweiten Semester Aufgaben im Hardware-Labor. Für Medieninformatik ist das allerdings nicht der Fall. Ich musste diese Lücke also selbst ein wenig schließen und habe seitdem immer mal ein paar eigene Projekte mit Arduino ausprobiert.
+                            </p>
+                            <p>
+                                Mit Arduino (oder MicroPython) lässt sich ziemlich viel lustiges Spielzeug bauen.
+                            </p>
+                            <h3>Bilder-Display</h3>
+                            <p>
+                                Mein erstes privates Projekt war ein kleines Display, welches Bilder (eine spätere Version auch GIFs) darstellen sollte. Dafür habe ich einen <a href="https://wiki.seeedstudio.com/XIAO-RP2040/">Seeed Studio XIAO RP2040</a> verwendet. Dieser ist wortwörtlich so groß wie ein Thumbnail und somit gut für kleine Projekte geeignet. Als Display habe ich ein simples (und günstiges) LCD-Display verwendet. Als erstes Projekt bereitete mir dieses Projekt alleine schon neue Herausforderungen, wodurch ich viel lernen konnte. Der Umgang mit der Arduino IDE und den Libraries für die verschiedenen Hardware-Teile sowie Löten wurden etwas geübt.
+                            </p>
+                            <p>
+                                <img src="assets/img/seeeduino_xiao_rp2040.webp" alt="Seeed Studio XIAO RP2040" class="img-fluid">
+                            </p>
+                            <h3>WiFi-Thermometer</h3>
+                            <p>
+                                Für ein anderes Projekt benutzte ich die <a href="https://platformio.org/platformio-ide">PlatformIO IDE</a>. Dies ist ein Plugin für Visual Studio Code mit allen wichtigen Funktionalitäten von Arduino. Dieses Projekt sollte ein  Geschenk für  ein Familienmitglied sein. Auf einem existierenden Display werden in der Küche Außen und Innentemperatur angezeigt. Mein Projekt sollte jetzt die Pool-Temperatur auf dem gleichen Display anzeigen.
+                            </p>
+                            <p>
+                                Dafür verwendete ich ein DS18B20-Sensor, da dieser wasserdicht ist und ein langes Kabel besitzt, was den Außeneinsatz etwas erträglicher macht. Der Chip war dieses mal ein <a href="https://www.wemos.cc/en/latest/s2/s2_mini.html">WeMos S2 Mini</a>. Er basiert ganz klasssisch auf dem ESP32-Chip. Das wichtigste Feature war allerdings die WIFI Funktionalität.
+                            </p>
+                            <p>
+                                <img src="assets/img/lolin_s2_mini.webp" alt="WeMos S2 Mini" class="img-fluid">
+                            </p>
+                            <p>
+                                Nach passendem Zusammenlöten und einem kleinen USB-Port-Problem (welches unter Windows nach dem Upload entsteht und sehr viel Zeit in Anspruch nahm), konnte das Problem zum ersten mal laufen. Momentan wird die Temperatur nur auf einer eigenen Website dargestellt, die Interaktion mit bestehenden Servern ist noch in Arbeit.
+                            </p>
+                        </article>
+                        <article>
+                            <h3>Facharbeit</h3>
+                            <p>
+                                Hier die Facharbeit über mein Auslandsjahr in Kanada: <a href="docs/Term Paper - An Exchange Year in Canada.pdf">Term Paper - An Exchange Year in Canada</a>
+                            </p>
+                        </article>
+                    </section>
+                </section>
+
+                <section class="content-item row justify-content-md-center" id="hobbys">
+                    <div class="col col-lg-9 col-md-10 col-sm-12">
+                        <h1>Hobbys</h1>
+                        <div class="container">
+                            <div class="row row-cols-auto row-gap-3">
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <div class="card">
+                                        <img src="assets/img/dice-dice-d20-d20-d-d-dungeons-dragons-roll-dnd-role-playing.webp" loading="lazy" class="card-img-top" alt="DnD Würfel">
+                                        <div class="card-body">
+                                          <h5 class="card-title">DnD</h5>
+                                          <p class="card-text">Dank Mr. Biggar und Mr. Goodman bin ich seit Jahren Fan von Dungeons and Dragons und treffe mich regelmäßig mit Freunden um gemeinsam Geschichten zu erzählen</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <div class="card">
+                                        <img src="https://www.saechsischer-chorverband.de/_Resources/Persistent/88c59472aaab2a8dc34cf55d262b7725552c6f77/gewandhaus_DSC2454-1900x832.jpg" loading="lazy" class="card-img-top" alt="Gewandhaussingen Chor">
+                                        <div class="card-body">
+                                          <h5 class="card-title">Chor</h5>
+                                          <p class="card-text">Mit meinem Chor wird jede Woche geübt. Normalerweise treten wir in meiner ehemaligen Schule auf allerdings waren wir schon zu verschiedenen Anlässen im Gewandhaus.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <div class="card">
+                                        <img src="/assets/img/guitar-acoustic-guitar-instrument-musical-instrument-close-up-violin-101197-pxhere.com.webp" loading="lazy" class="card-img-top" alt="Gitarre">
+                                        <div class="card-body">
+                                          <h5 class="card-title">Instrumente</h5>
+                                          <p class="card-text">Ich habe aus meiner Kindheit viele Jahre Schlagzeug-Erfahrung und habe mir seit ein paar Jahren versucht selbst Ukulele, Gitarre und Bass beizubringen.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <div class="card">
+                                        <img src="assets/img/maus.webp" loading="lazy" class="card-img-top" alt="Kurzohrrüsselspringer">
+                                        <div class="card-body">
+                                          <h5 class="card-title">Gaming</h5>
+                                          <p class="card-text">Ich wäre kein Informatik-Student, wenn ich nicht auch Interessse an Computerspielen hätte ;)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-item row justify-content-md-center" id="referenzen">
+                    <div class="col col-lg-9 col-md-10 col-sm-12">
+                        <h1>Referenzen</h1>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4>Politische Arbeit</h4>
+                                <p>
+                                    Für meine Dienste als Friedensbotschafter der UN erhielt ich schon 47 Friedensnobelpreise.
+                                </p>
+                            </li>
+                            <li class="list-group-item">
+                                <h4>Arbeitgeber</h4>
+                                <p>
+                                    Arbeitgeber sagten über mich: <q>Er ist okay.</q>
+                                </p>
+                            </li>
+                            <li class="list-group-item">
+                                <h4>Freunde</h4>
+                                <p>
+                                    Freunde sagten über mich: <q>Er ist okay.</q>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+        </main>
+
+        <footer class="row" id="footer">
+            <div class="col-12 text-center py-2 d-flex justify-content-center">
+                <p>
+                    Kontakt: <a href="mailto:paul.thomasius@stud.htwk-leipzig.de">Paul Thomasius</a>
+
+                    |
+
+                    <a data-bs-toggle="offcanvas" href="#offcanvasQuelle" role="button" aria-controls="offcanvasQuelle">
+                        Quellen
+                    </a>
+                </p>
+                
+            </div>
+        </footer>
+
+
+    </div>
+
+    
+    <button onclick="topFunction()" id="topButton" title="Go to top">
+        <img id="topicon" src="assets/icons/back-to-top-svgrepo-com.svg" alt="Back to Top">
+    </button>
+    
+            
+      
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasQuelle" aria-labelledby="offcanvasQuelleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasQuelleLabel">Quellen</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+            <ul>
+                <li><a href="https://codepen.io/motionharvest/pen/WNQYJyM">Quelle für Scroll-Tunnel</a></li>
+                <li><a href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68819/3d_space_5.jpg">Quelle für Tunnel-Bild</a></li>
+                <li><a href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68819/waveform-bump3.jpg">Quelle für Tunnel-Bild 2</a></li>
+                <li><a href="https://www.goodfon.com/miscellanea/wallpaper-download-1920x1080-dice-dice-d20-d20-d-d-dungeons-dragons-roll-dnd-role-playing.html">Bild: DnD</a></li>
+                <li><a href="https://www.saechsischer-chorverband.de/scv/projekte/gewandhaussingen-sachsischer-chore.html">Bild: Chor</a></li>
+                <li><a href="https://pxhere.com/de/photo/101197">Bild: Gitarre</a></li>
+                <li><a href="https://www.flickr.com/photos/w-tommerdich/52739082935">Bild: Maus</a></li>
+            </ul>
+          </div>
+        </div>
+    </div>
+    
+
+    
+</body>
+</html>

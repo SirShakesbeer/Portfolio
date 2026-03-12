@@ -1,0 +1,124 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --secondary-bg-color: #343a40;
+    --secondary-text-color: #ffffff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    
+    font-family: Arial, sans-serif;
+}
+
+main {
+    background-color: #32383d0e;
+}
+
+#footer {
+    background-color: var(--secondary-bg-color);
+    color: var(--secondary-text-color);
+
+    border: 1px solid #522323;
+}
+
+#header {
+    background-color: var(--secondary-bg-color);
+    color: var(--secondary-text-color);
+
+    border: 1px solid #920303;
+}
+
+.content-item {
+    padding: .5rem;
+    margin-bottom: .7rem;
+
+    border: 1px solid #4c5519;
+}
+
+.smallertext {
+    font-size: .8em;
+    font-weight: 100;
+
+    border: 1px solid #92035b;
+}
+
+h1, h2 {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.paragraf {
+    color:rgb(0, 66, 66);
+}
+
+h1 {
+    border: 1px solid #000000;
+}
+
+h2 {
+    border: 1px solid #038192;
+}
+
+a {
+    border: 1px solid #6a0392;
+    font-size: 1.2rem;
+}
+
+#paragraf-1 {
+    color:rgba(0, 66, 66, 0.801);
+    font: serif;
+    border: 1px solid #2312b9;
+    font-size: 1.1rem;
+    margin:3rem;
+    padding:3rem;
+}
+#paragraf-2 {
+    color: rgba(0, 66, 66, 0.596);
+    font: sans-serif;
+    border: 1px solid #cc1010;
+    font-size: .7rem;
+    margin-top: 2rem;
+    padding-left: 4rem;
+}
+#paragraf-3 {
+    color:rgba(0, 66, 66, 0.342);
+    font: monospace;
+    border: 1px solid #1cf314;
+    font-size: .8rem;
+    margin-right: 4rem;
+}
+#paragraf-4 {
+    color:rgba(0, 66, 66, 0.13);
+    font: fantasy;
+    border: 1px solid #2800b9;
+    font-size: .9rem;
+    margin-left: 3rem;
+}
+
+ul {
+    border: 1px solid #124b23;
+    font-size: 1.8rem;
+}
+
+b {
+    border: 1px solid #4b3412;
+    font-size: 1.4rem;
+}
+
+div {
+    border: 1px solid #124b23;
+    font-size: 1.8rem;
+    display:block;
+    padding: 2rem;
+}

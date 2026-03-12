@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "@node-minify/core": "^9.0.2",
+    "@node-minify/csso": "^9.0.1",
+    "@node-minify/uglify-js": "^9.0.1",
+    "save": "^2.9.0",
+    "save-dev": "^0.0.1-security",
+    "three": "^0.172.0"
+  },
+  "devDependencies": {
+    "vite": "^6.1.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  }
+}
+
+
