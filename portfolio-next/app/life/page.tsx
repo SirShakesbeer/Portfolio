@@ -21,7 +21,32 @@ type LifePost = {
 
 export default function LifePage() {
   const posts = getPostsByType('life') as LifePost[];
-  const totalSlides = posts.length + 3;
+  
+  // Create card data for 3D tunnel
+  const cards = posts.map((post, index) => ({
+    id: post.id,
+    title: post.title,
+    excerpt: post.excerpt,
+    content: post.content_html,
+  }));
+
+  // Add start card
+  cards.unshift({
+    id: 0,
+    title: 'Life',
+    excerpt: 'Take a journey through the time slide.',
+    content: '',
+  });
+
+  // Add end card
+  cards.push({
+    id: -1,
+    title: 'The End',
+    excerpt: 'Back to Home',
+    content: '',
+  });
+
+  const cardCount = cards.length;
 
   return (
     <>
@@ -31,51 +56,19 @@ export default function LifePage() {
 
       <main className="tunnel row justify-content-md-center" id="life">
         <div className="px-0" id="lifeTunnelCanvas">
-          <TunnelScene scrollTriggerSelector="#life" scrollDistanceSlides={totalSlides} />
+          <TunnelScene 
+            scrollTriggerSelector="#life" 
+            scrollDistanceSlides={cardCount}
+            cards={cards}
+          />
         </div>
 
         <div className="col life-tunnel-content col-lg-9 col-md-10 col-sm-12">
-          <section className="life-tunnel-slide row" id="life-tunnel-title">
-            <div className="col-10 col-lg-8">
-              <h1 className="display-4 fw-bold">Life</h1>
-              <p className="lead">
-                Take a journey through the time slide.
-              </p>
-            </div>
-          </section>
-
-          {posts.length === 0 ? (
-            <section className="life-tunnel-slide row">
-              <div className="col-10 col-lg-8">
-                <h2>Error 404</h2>
-                <p>
-                  Could not find any posts with type <code>life</code>.
-                </p>
-              </div>
-            </section>
-          ) : (
-            posts.map((post, index) => (
-              <section className="life-tunnel-slide row" key={post.id}>
-                <div className="col-10 col-lg-8">
-                  <p className="smallertext mb-1">Station {index + 1}</p>
-                  <h2>{post.title}</h2>
-                  <div className="project-body" dangerouslySetInnerHTML={{ __html: post.content_html }} />
-                </div>
-              </section>
-            ))
-          )}
-
-          <section className="life-tunnel-slide row" id="life-tunnel-end">
-            <div className="col-10 col-lg-8">
-              <p>
-                <Link href="/">Back to Home</Link>
-              </p>
-            </div>
-          </section>
+          {/* Hidden content container - kept for scroll distance */}
         </div>
       </main>
 
-      <LifeTunnelAnimations totalSlides={totalSlides} />
+      <LifeTunnelAnimations cardCount={cardCount} />
     </>
   );
 }

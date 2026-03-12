@@ -113,3 +113,15 @@ npm run seed
 - Slug must be unique.
 - Markdown is stored and converted to HTML on save.
 - Upload endpoint currently has no auth yet (add auth before public deployment).
+
+## TODO
+
+- update subpages
+    - skills
+    - projects
+    - hobbies
+    - links
+- update home page
+- update impressum and sources
+- update seo
+- fix language/add localization

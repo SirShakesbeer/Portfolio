@@ -3,14 +3,14 @@
 import { useEffect } from 'react';
 
 /**
- * ScrollTrigger setup for the /life tunnel page.
- * Uses dedicated selectors so it does not interfere with the homepage tunnel.
+ * ScrollTrigger setup for the /life tunnel page with 3D card snapping.
+ * Syncs scroll height with number of cards for proper scroll distance.
  */
 type LifeTunnelAnimationsProps = {
-  totalSlides?: number;
+  cardCount?: number;
 };
 
-export default function LifeTunnelAnimations({ totalSlides }: LifeTunnelAnimationsProps) {
+export default function LifeTunnelAnimations({ cardCount = 1 }: LifeTunnelAnimationsProps) {
   useEffect(() => {
     let cleanup: (() => void) | undefined;
 
@@ -20,6 +20,7 @@ export default function LifeTunnelAnimations({ totalSlides }: LifeTunnelAnimatio
 
       gsap.registerPlugin(ScrollTrigger);
 
+      // Kill existing life page triggers
       ScrollTrigger.getAll().forEach((trigger) => {
         if (trigger.vars.id?.toString().startsWith('portfolio-life-page-')) {
           trigger.kill();
@@ -27,48 +28,27 @@ export default function LifeTunnelAnimations({ totalSlides }: LifeTunnelAnimatio
       });
 
       const ctx = gsap.context(() => {
-        const sections = gsap.utils.toArray<HTMLElement>('.life-tunnel-slide');
         const tunnelContent = document.querySelector<HTMLElement>('.life-tunnel-content');
         const tunnelCanvas = document.querySelector<HTMLElement>('#lifeTunnelCanvas');
 
-        if (!tunnelContent || !tunnelCanvas || sections.length === 0) return;
+        if (!tunnelContent || !tunnelCanvas) return;
 
-        const resolvedSlides = Math.max(totalSlides ?? sections.length, 1);
-        const scrollSteps = Math.max(resolvedSlides - 1, 1);
-        const getScrollDistance = () => {
-          const navHeight = document.querySelector<HTMLElement>('nav.navbar')?.offsetHeight ?? 0;
-          const baseDistance = resolvedSlides * window.innerHeight;
-          return baseDistance + navHeight;
-        };
-
-        tunnelContent.style.height = `${resolvedSlides * 100}vh`;
+        // Set container height based on card count to enable scrolling
+        const resolvedCardCount = Math.max(cardCount, 1);
+        const scrollHeight = resolvedCardCount * window.innerHeight;
+        tunnelContent.style.height = `${resolvedCardCount * 100}vh`;
 
         gsap.set(tunnelCanvas, { opacity: 1 });
 
-        gsap.to(sections, {
-          yPercent: -100 * Math.max(resolvedSlides - 1, 0),
-          ease: 'none',
-          scrollTrigger: {
-            id: 'portfolio-life-page-slides',
-            trigger: tunnelContent,
-            start: 'top top',
-            pin: true,
-            scrub: 0.2,
-            invalidateOnRefresh: true,
-            snap: {
-              snapTo: 1 / scrollSteps,
-              duration: { min: 0.2, max: 0.45 },
-              ease: 'power1.inOut',
-            },
-            end: () => `+=${getScrollDistance()}`,
-          },
-        });
+        // Pin canvas during scroll
+        const navHeight = document.querySelector<HTMLElement>('nav.navbar')?.offsetHeight ?? 0;
+        const totalScrollDistance = scrollHeight + navHeight;
 
         ScrollTrigger.create({
           id: 'portfolio-life-page-canvas-pin',
           trigger: tunnelContent,
           start: 'top top',
-          end: () => `+=${getScrollDistance()}`,
+          end: () => `+=${totalScrollDistance}`,
           pin: tunnelCanvas,
           pinSpacing: false,
           invalidateOnRefresh: true,
@@ -80,7 +60,7 @@ export default function LifeTunnelAnimations({ totalSlides }: LifeTunnelAnimatio
     })();
 
     return () => cleanup?.();
-  }, [totalSlides]);
+  }, [cardCount]);
 
   return null;
 }
