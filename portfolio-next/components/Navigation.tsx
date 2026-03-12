@@ -17,9 +17,10 @@ export default function Navigation() {
           <ul className="navbar-nav mx-auto">
             <li className="nav-item"><a className="nav-link" href="#header">Home</a></li>
             <li className="nav-item"><a className="nav-link" href="#about">About</a></li>
-            <li className="nav-item"><a className="nav-link" href="#leben">Leben</a></li>
-            <li className="nav-item"><a className="nav-link" href="#fähigkeiten">Fähigkeiten</a></li>
-            <li className="nav-item"><a className="nav-link" href="#projekte">Projekte</a></li>
+            <li className="nav-item"><a className="nav-link" href="/lifehistory">Leben</a></li>
+            <li className="nav-item"><a className="nav-link" href="/skills">Fähigkeiten</a></li>
+            <li className="nav-item"><a className="nav-link" href="/projects">Projekte</a></li>
+            <li className="nav-item"><a className="nav-link" href="/studio">Studio</a></li>
             <li className="nav-item"><a className="nav-link" href="#hobbys">Hobbys</a></li>
             <li className="nav-item"><a className="nav-link" href="#referenzen">Referenzen</a></li>
             <li className="nav-item"><a className="nav-link" href="#footer">Kontakt</a></li>

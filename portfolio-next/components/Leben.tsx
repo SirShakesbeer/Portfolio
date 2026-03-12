@@ -1,5 +1,19 @@
-// Server component – the SVG markup is static; GSAP animates it client-side via AnimationsInit.
+import Link from 'next/link';
+import { getPostsByType } from '@/lib/db';
+
+type LifeHistoryPost = {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  cover_image: string | null;
+  created_at: string;
+};
+
+// Server component – SVG markup remains for existing GSAP motion path animations.
 export default function Leben() {
+  const posts = getPostsByType('lifehistory') as LifeHistoryPost[];
+
   return (
     <section className="content-item row justify-content-md-center" id="leben">
       {/* Invisible path that GSAP uses to animate the ball */}
@@ -59,80 +73,33 @@ export default function Leben() {
       <section className="col col-lg-9 col-md-10 col-sm-12">
         <h1>Leben</h1>
 
-        <article className="row py-3">
-          <h3>Der Ursprung</h3>
-          <p>
-            Offiziell wurde ich in Schkeuditz geboren aber ich lebe schon mein ganzes Leben in Leipzig.
-          </p>
-        </article>
+        {posts.length === 0 ? (
+          <article className="row py-3">
+            <h3>Noch keine Life-History-Eintraege</h3>
+            <p>
+              Erstelle in <Link href="/studio">Studio</Link> einen Post mit dem Typ <code>lifehistory</code>,
+              um diese Sektion dynamisch zu fuellen.
+            </p>
+          </article>
+        ) : (
+          <>
+            {posts.slice(0, 3).map((post) => (
+              <article className="row py-3" key={post.id}>
+                <h3>{post.title}</h3>
+                <p>{post.excerpt}</p>
+                <p>
+                  <Link href={`/lifehistory/${post.slug}`}>Weiterlesen</Link>
+                </p>
+              </article>
+            ))}
 
-        <article>
-          <h3>Schule</h3>
-          <p>
-            Ich begann an der Grundschule Wiederitzsch und bin nach der vierten Klasse auf die
-            Oberschule (ebenfalls in Wiederitzsch) gewechselt. Dort war ich im Schülerrat tätig und
-            spielte neben der Schule Schlagzeug. Nach der zehnten Klasse konnte ich aufs Gymnasium
-            wechseln, was ich auch tat – aber zunächst folgte ein Auslandsjahr in Kanada.
-          </p>
-          <h4>Praktika</h4>
-          <p>
-            Während meiner Schulzeit habe ich zwei Praktika bei verschiedenen Arbeitgebern gemacht.
-            Mein erstes Praktikum machte ich trotz Brillenlosigkeit bei{' '}
-            <a href="https://www.augenoptik-findeisen.de">Augenoptik Findeisen</a>. Das zweite
-            Praktikum machte ich im{' '}
-            <a href="https://www.leipzig.de/buergerservice-und-verwaltung/aemter-und-behoerdengaenge/behoerden-und-dienstleistungen/dienststelle/familieninfobuero-5132fib">
-              Familien-Info-Büro Leipzig
-            </a>. Auch wenn beide Praktika nicht relevant wirken, habe ich viel über die Arbeitswelt
-            und den Umgang mit verschiedenen Menschen gelernt.
-          </p>
-        </article>
-
-        <article>
-          <h3>Kanada</h3>
-          <p>
-            Im Herbst 2019 flog ich nach Vancouver um dort zehn Monate eine kanadische Schule zu
-            besuchen.{' '}
-            <a href="https://secondary.sd42.ca/thss/">Thomas Haney Secondary School</a> hat mich und
-            viele weitere internationale Schüler willkommen gehießen. Das offizielle Motto von{' '}
-            <abbr title="Thomas Haney Secondary School">THSS</abbr> lautet{' '}
-            <q>Seek Challenge, Experience Success</q>. Im Scherz hatten wir als Schülerschaft unser
-            eigenes Motto: <q>Procrastinate.</q>
-          </p>
-          <p>
-            Der alltägliche Umgang mit Englisch, vor allem durch Freunde aber auch wegen meiner
-            Host-Family, hat mir sehr geholfen die Sprache besser zu verstehen und anzuwenden.
-          </p>
-          <h4>VMUN</h4>
-          <p>
-            Leider traf uns in Kanada im Jahr 2020 auch der Corona-bedingte Lockdown, weshalb viele
-            Events ausfallen mussten. Zum Glück konnte einiges vorher noch geschehen, wie{' '}
-            <abbr title="Vancouver Model United Nations">VMUN</abbr>. Bei den{' '}
-            <a href="https://vmun.com">Vancouver Model United Nations</a> habe ich im Komitee{' '}
-            <abbr title="Disarmament and International Security Committee">DISEC</abbr> die Delegation
-            von Zypern übernommen.
-          </p>
-        </article>
-
-        <article>
-          <h3>Abschluss</h3>
-          <p>
-            Nachdem ich wieder in Deutschland angekommen bin, machte ich mein Abitur am{' '}
-            <a href="https://www.leibniz-gymnasium-leipzig.de">Leibniz-Gymnasium Leipzig</a>. Durch
-            das Auslandsjahr und ein Schleifenjahr wurde mein Schulweg um zwei Jahre verlängert, daher
-            habe ich direkt nach meinem Abschluss angefangen zu studieren.
-          </p>
-        </article>
-
-        <article>
-          <h3>Studium</h3>
-          <p>
-            Aufgrund meines Interesses an Computern entschied ich mich für den Studiengang
-            Medieninformatik an der{' '}
-            <a href="https://www.htwk-leipzig.de">HTWK Leipzig</a>. Nebenbei bin ich Teil des{' '}
-            <a href="https://streamteam.htwk-leipzig.de">Streamteams</a> und habe schon bei einigen
-            Produktionen mitgewirkt.
-          </p>
-        </article>
+            <article className="row py-3">
+              <p>
+                <Link href="/lifehistory">Alle Stationen ansehen</Link>
+              </p>
+            </article>
+          </>
+        )}
       </section>
     </section>
   );

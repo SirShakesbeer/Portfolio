@@ -132,12 +132,16 @@ export default function TunnelScene() {
 
       const tl = gsap.timeline({
         scrollTrigger: {
+          id: 'portfolio-tunnel-camera-path',
           trigger: '.tunnel-content',
           start: 'top top',
-          end: 'bottom 100%',
-          pin: '#tunnelCanvas',
+          end: () => {
+            const el = document.querySelector<HTMLElement>('.tunnel-content');
+            return `+=${el?.offsetHeight ?? window.innerHeight}`;
+          },
           markers: false,
           scrub: 2,
+          invalidateOnRefresh: true,
         },
       });
       tl.to(tubePerc, {
@@ -184,6 +188,7 @@ export default function TunnelScene() {
       // ── Cleanup stored on the ref for the return callback ────────────────
       (canvasRef as React.MutableRefObject<HTMLCanvasElement & { _cleanup?: () => void }>)
         .current!._cleanup = () => {
+        tl.kill();
         document.removeEventListener('mousemove', onMouseMove);
         window.removeEventListener('resize', onResize);
         renderer.dispose();
