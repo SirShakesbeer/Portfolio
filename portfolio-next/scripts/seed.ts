@@ -40,7 +40,7 @@ db.exec(`
   INSERT OR IGNORE INTO post_types (slug, label, description) VALUES
     ('project', 'Project', 'Portfolio project with technical details'),
     ('skill', 'Skill', 'Skill profile entry such as tools, languages, strengths'),
-    ('lifehistory', 'Life History', 'Timeline-style milestone or biography section'),
+    ('life', 'Life', 'Timeline-style milestone or biography section'),
     ('note', 'Note', 'Short update or thought'),
     ('experiment', 'Experiment', 'Prototype, trial, or concept post');
 `);
@@ -190,7 +190,7 @@ const extraPosts = [
     title: 'Der Ursprung',
     slug: 'leben-der-ursprung',
     excerpt: 'Geboren in Schkeuditz, aufgewachsen in Leipzig.',
-    post_type: 'lifehistory',
+    post_type: 'life',
     content_markdown: [
       'Offiziell wurde ich in Schkeuditz geboren, aber ich lebe schon mein ganzes Leben in Leipzig.',
     ].join('\n'),
@@ -201,7 +201,7 @@ const extraPosts = [
     title: 'Schulzeit und Praktika',
     slug: 'leben-schulzeit-und-praktika',
     excerpt: 'Weg von der Grundschule bis zum Gymnasium inklusive erster Praktika.',
-    post_type: 'lifehistory',
+    post_type: 'life',
     content_markdown: [
       'Ich begann an der Grundschule Wiederitzsch und wechselte danach auf die Oberschule in Wiederitzsch.',
       '',
@@ -218,7 +218,7 @@ const extraPosts = [
     title: 'Auslandsjahr in Kanada',
     slug: 'kanada-auslandsjahr',
     excerpt: 'Schuljahr in Vancouver mit Fokus auf Sprache, Teamarbeit und Selbstorganisation.',
-    post_type: 'lifehistory',
+    post_type: 'life',
     content_markdown: [
       'Im Herbst 2019 flog ich nach Vancouver, um dort zehn Monate eine kanadische Schule zu besuchen.',
       '',
@@ -234,7 +234,7 @@ const extraPosts = [
     title: 'Kanada: VMUN und Lockdown',
     slug: 'kanada-vmun-und-lockdown',
     excerpt: 'DISEC-Delegation bei VMUN und Erfahrungen waehrend der Corona-Zeit.',
-    post_type: 'lifehistory',
+    post_type: 'life',
     content_markdown: [
       'Bei den Vancouver Model United Nations uebernahm ich im DISEC-Komitee die Delegation von Zypern.',
       '',
@@ -249,7 +249,7 @@ const extraPosts = [
     title: 'Abitur und Schleifenjahr',
     slug: 'abitur-und-schleifenjahr',
     excerpt: 'Rueckkehr nach Deutschland und Abschluss am Leibniz-Gymnasium Leipzig.',
-    post_type: 'lifehistory',
+    post_type: 'life',
     content_markdown: [
       'Nach meiner Rueckkehr aus Kanada machte ich mein Abitur am Leibniz-Gymnasium Leipzig.',
       '',
@@ -264,7 +264,7 @@ const extraPosts = [
     title: 'Studium Medieninformatik',
     slug: 'studium-medieninformatik-htwk',
     excerpt: 'Studium an der HTWK Leipzig und Mitarbeit im Streamteam.',
-    post_type: 'lifehistory',
+    post_type: 'life',
     content_markdown: [
       'Aufgrund meines Interesses an Computern entschied ich mich fuer Medieninformatik an der HTWK Leipzig.',
       '',

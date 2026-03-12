@@ -7,7 +7,13 @@ import type { Vector3 } from 'three';
  * Dynamically imported inside useEffect to avoid SSR issues with WebGL.
  * Replaces the original scene.js / scene.min.js.
  */
-export default function TunnelScene() {
+type TunnelSceneProps = {
+  scrollTriggerSelector?: string;
+};
+
+export default function TunnelScene({
+  scrollTriggerSelector = '.tunnel-content',
+}: TunnelSceneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -133,10 +139,10 @@ export default function TunnelScene() {
       const tl = gsap.timeline({
         scrollTrigger: {
           id: 'portfolio-tunnel-camera-path',
-          trigger: '.tunnel-content',
+          trigger: scrollTriggerSelector,
           start: 'top top',
           end: () => {
-            const el = document.querySelector<HTMLElement>('.tunnel-content');
+            const el = document.querySelector<HTMLElement>(scrollTriggerSelector);
             return `+=${el?.offsetHeight ?? window.innerHeight}`;
           },
           markers: false,
@@ -200,7 +206,7 @@ export default function TunnelScene() {
       (canvasRef as React.MutableRefObject<HTMLCanvasElement & { _cleanup?: () => void }>)
         .current?._cleanup?.();
     };
-  }, []);
+  }, [scrollTriggerSelector]);
 
   return <canvas ref={canvasRef} />;
 }

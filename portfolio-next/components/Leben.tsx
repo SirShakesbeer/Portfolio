@@ -12,7 +12,7 @@ type LifeHistoryPost = {
 
 // Server component – SVG markup remains for existing GSAP motion path animations.
 export default function Leben() {
-  const posts = getPostsByType('lifehistory') as LifeHistoryPost[];
+  const posts = getPostsByType('life') as LifeHistoryPost[];
 
   return (
     <section className="content-item row justify-content-md-center" id="leben">
@@ -77,7 +77,7 @@ export default function Leben() {
           <article className="row py-3">
             <h3>Noch keine Life-History-Eintraege</h3>
             <p>
-              Erstelle in <Link href="/studio">Studio</Link> einen Post mit dem Typ <code>lifehistory</code>,
+              Erstelle in <Link href="/studio">Studio</Link> einen Post mit dem Typ <code>life</code>,
               um diese Sektion dynamisch zu fuellen.
             </p>
           </article>
@@ -88,14 +88,14 @@ export default function Leben() {
                 <h3>{post.title}</h3>
                 <p>{post.excerpt}</p>
                 <p>
-                  <Link href={`/lifehistory/${post.slug}`}>Weiterlesen</Link>
+                  <Link href={`/life/${post.slug}`}>Weiterlesen</Link>
                 </p>
               </article>
             ))}
 
             <article className="row py-3">
               <p>
-                <Link href="/lifehistory">Alle Stationen ansehen</Link>
+                <Link href="/life">Alle Stationen ansehen</Link>
               </p>
             </article>
           </>

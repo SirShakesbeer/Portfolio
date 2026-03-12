@@ -258,7 +258,11 @@ export default function StudioEditor({ initialPostTypes }: StudioEditorProps) {
       const targetUrl =
         body.postType === 'project'
           ? `/projects/${body.slug}`
-          : `/posts/${body.postType}/${body.slug}`;
+          : body.postType === 'skill'
+            ? `/skills/${body.slug}`
+            : body.postType === 'life'
+              ? `/life/${body.slug}`
+              : `/posts/${body.postType}/${body.slug}`;
       setMessage(`${isEditMode ? 'Updated' : 'Saved'}. Open ${targetUrl}`);
       await refreshExistingPosts();
     } finally {

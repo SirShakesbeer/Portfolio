@@ -191,6 +191,41 @@ canvas { max-width: 100%; }
 #tunnel-end            { background: none; }
 #tunnel-end > .tunnel-card   { background: none; }
 
+/* ─── Life tunnel page ──────────────────────────────────────── */
+#life {
+  min-height: 100vh;
+}
+
+#lifeTunnelCanvas {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  opacity: 1;
+}
+
+.life-tunnel-content {
+  position: relative;
+  z-index: 5;
+}
+
+.life-tunnel-slide {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+}
+
+.life-tunnel-slide h1,
+.life-tunnel-slide h2,
+.life-tunnel-slide p {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
+
+#life-tunnel-title {
+  text-align: center;
+}
+
 /* ─── SVG path animation (Leben) ────────────────────────────── */
 #pathSVG {
   height: 100%;

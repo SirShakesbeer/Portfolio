@@ -71,10 +71,14 @@ function initSchema(db: Database.Database): void {
     `INSERT OR IGNORE INTO post_types (slug, label, description) VALUES
       ('project', 'Project', 'Portfolio project with technical details'),
       ('skill', 'Skill', 'Skill profile entry such as tools, languages, strengths'),
-      ('lifehistory', 'Life History', 'Timeline-style milestone or biography section'),
+      ('life', 'Life', 'Timeline-style milestone or biography section'),
+      ('lifehistory', 'Life History (legacy)', 'Legacy alias for life content'),
       ('note', 'Note', 'Short update or thought'),
       ('experiment', 'Experiment', 'Prototype, trial, or concept post')`
   ).run();
+
+  // Normalize legacy type naming so URLs and Studio terminology use "life" consistently.
+  db.prepare("UPDATE posts SET post_type = 'life' WHERE post_type = 'lifehistory'").run();
 
   migrateLegacyProjects(db);
 }
