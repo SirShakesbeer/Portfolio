@@ -36,6 +36,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No files uploaded' }, { status: 400 });
     }
 
+    // Extract optional postId from query parameters
+    const postId = req.nextUrl.searchParams.get('postId');
+    const parsedPostId = postId ? parseInt(postId, 10) : null;
+
     const now = new Date();
     const year = String(now.getFullYear());
     const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -66,6 +70,7 @@ export async function POST(req: NextRequest) {
       const markdown = markdownForFile(relFilePath, file.type || '', altText);
 
       addMediaRecord({
+        post_id: parsedPostId,
         original_name: file.name,
         file_path: relFilePath,
         media_kind: mediaKindFromMime(file.type || ''),

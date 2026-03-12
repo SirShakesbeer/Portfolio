@@ -16,11 +16,11 @@ export default function Navigation() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mx-auto">
             <li className="nav-item"><a className="nav-link" href="/">Home</a></li>
-            <li className="nav-item"><a className="nav-link" href="/life">Leben</a></li>
-            <li className="nav-item"><a className="nav-link" href="/skills">Fähigkeiten</a></li>
-            <li className="nav-item"><a className="nav-link" href="/projects">Projekte</a></li>
+            <li className="nav-item"><a className="nav-link" href="/life">Life</a></li>
+            <li className="nav-item"><a className="nav-link" href="/skills">Skills</a></li>
+            <li className="nav-item"><a className="nav-link" href="/projects">Projects</a></li>
             <li className="nav-item"><a className="nav-link" href="/studio">Studio</a></li>
-            <li className="nav-item"><a className="nav-link" href="/hobbies">Hobbys</a></li>
+            <li className="nav-item"><a className="nav-link" href="/hobbies">Hobbies</a></li>
             <li className="nav-item"><a className="nav-link" href="/contact">Links</a></li>
           </ul>
         </div>

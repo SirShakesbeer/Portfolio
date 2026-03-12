@@ -47,9 +47,6 @@ export default function Faehigkeiten() {
                     <div className="smallertext">Skill</div>
                     <h3>{skill.title}</h3>
                     <p>{skill.excerpt}</p>
-                    <p>
-                      <Link href={`/skills/${skill.slug}`}>Mehr erfahren</Link>
-                    </p>
                   </div>
                 </div>
               </div>

@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import MediaPicker from './MediaPicker';
+import styles from './StudioEditor.module.css';
 
 type PostType = {
   id: number;
@@ -30,8 +32,17 @@ type StudioPostDetail = {
   status: 'published' | 'draft';
 };
 
+type Media = {
+  id: number;
+  file_path: string;
+  media_kind: 'image' | 'video' | 'audio' | 'document' | 'other';
+  original_name: string;
+};
+
 type StudioEditorProps = {
   initialPostTypes: PostType[];
+  initialPostId?: number;
+  onSave?: () => void;
 };
 
 function makeSlug(input: string): string {
@@ -43,12 +54,33 @@ function makeSlug(input: string): string {
     .replace(/-+/g, '-');
 }
 
-export default function StudioEditor({ initialPostTypes }: StudioEditorProps) {
+function markdownForMedia(media: Media): string {
+  const url = media.file_path;
+  const altText = media.original_name.split('.')[0] || 'media';
+
+  switch (media.media_kind) {
+    case 'image':
+      return `![${altText}](${url})`;
+    case 'video':
+      return `<video controls src="${url}"></video>`;
+    case 'audio':
+      return `<audio controls src="${url}"></audio>`;
+    default:
+      return `[${altText}](${url})`;
+  }
+}
+
+export default function StudioEditor({
+  initialPostTypes,
+  initialPostId,
+  onSave,
+}: StudioEditorProps) {
   const [postTypes, setPostTypes] = useState(initialPostTypes);
   const [existingPosts, setExistingPosts] = useState<StudioPostSummary[]>([]);
-  const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
+  const [selectedPostId, setSelectedPostId] = useState<number | null>(initialPostId || null);
   const [isLoadingPost, setIsLoadingPost] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false);
 
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
@@ -74,7 +106,11 @@ export default function StudioEditor({ initialPostTypes }: StudioEditorProps) {
 
   useEffect(() => {
     void refreshExistingPosts();
-  }, []);
+    // Load initial post if provided
+    if (initialPostId) {
+      void loadPost(String(initialPostId));
+    }
+  }, [initialPostId]);
 
   async function refreshExistingPosts() {
     const res = await fetch('/api/studio/posts?status=all');
@@ -201,7 +237,10 @@ export default function StudioEditor({ initialPostTypes }: StudioEditorProps) {
       const formData = new FormData();
       Array.from(files).forEach((file) => formData.append('files', file));
 
-      const res = await fetch('/api/studio/upload', {
+      // Pass postId if editing a post
+      const uploadUrl = isEditMode ? `/api/studio/upload?postId=${selectedPostId}` : '/api/studio/upload';
+
+      const res = await fetch(uploadUrl, {
         method: 'POST',
         body: formData,
       });
@@ -221,6 +260,32 @@ export default function StudioEditor({ initialPostTypes }: StudioEditorProps) {
       setMessage('Upload complete. Markdown snippets were added to the editor.');
     } finally {
       setIsUploading(false);
+    }
+  }
+
+  function handleMediaSelected(media: any) {
+    const mediaMarkdown = markdownForMedia(media);
+    
+    // Insert at cursor or append
+    const el = textRef.current;
+    if (el && el.selectionStart !== undefined) {
+      const start = el.selectionStart;
+      const end = el.selectionEnd;
+      const before = markdown.slice(0, start);
+      const selected = markdown.slice(start, end);
+      const after = markdown.slice(end);
+      
+      const updated = before + mediaMarkdown + '\n\n' + after;
+      setMarkdown(updated);
+      
+      queueMicrotask(() => {
+        el.focus();
+        const cursor = start + mediaMarkdown.length + 2;
+        el.setSelectionRange(cursor, cursor);
+      });
+    } else {
+      // Append if no selection
+      setMarkdown((prev) => `${prev}${prev.endsWith('\n') || prev.length === 0 ? '' : '\n\n'}${mediaMarkdown}`);
     }
   }
 
@@ -265,6 +330,11 @@ export default function StudioEditor({ initialPostTypes }: StudioEditorProps) {
               : `/posts/${body.postType}/${body.slug}`;
       setMessage(`${isEditMode ? 'Updated' : 'Saved'}. Open ${targetUrl}`);
       await refreshExistingPosts();
+      
+      // Call onSave callback if provided
+      if (onSave) {
+        onSave();
+      }
     } finally {
       setIsSaving(false);
     }
@@ -295,182 +365,209 @@ export default function StudioEditor({ initialPostTypes }: StudioEditorProps) {
   }
 
   return (
-    <main className="container py-5" style={{ maxWidth: 1000 }}>
-      <h1>Studio</h1>
-      <p style={{ opacity: 0.75 }}>
+    <main className={styles.editor}>
+      <h1 className={styles.heading}>Studio</h1>
+      <p className={styles.subtext}>
         Write markdown, upload media, and publish posts with reusable post types.
       </p>
 
-      <div className="row g-4 mt-1">
-        <div className="col-12 col-lg-8">
-          <label className="form-label">Title</label>
-          <input
-            className="form-control"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="My new post"
-          />
+      <div className={styles.layout}>
+        {/* ── Left column: content ── */}
+        <div>
+          <div className={styles.field}>
+            <label className={styles.label}>Title</label>
+            <input
+              className={styles.input}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="My new post"
+            />
+          </div>
 
-          <div className="row g-2 mt-1">
-            <div className="col-8">
-              <label className="form-label">Slug</label>
+          <div className={styles.row}>
+            <div className={styles.field}>
+              <label className={styles.label}>Slug</label>
               <input
-                className="form-control"
+                className={styles.input}
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
                 placeholder="my-new-post"
               />
             </div>
-            <div className="col-4">
-              <label className="form-label">Status</label>
+            <div className={styles.field}>
+              <label className={styles.label}>Status</label>
               <select
-                className="form-select"
+                className={styles.select}
                 value={status}
                 onChange={(e) => setStatus(e.target.value as 'published' | 'draft')}
               >
-                <option value="published">published</option>
-                <option value="draft">draft</option>
+                <option value="published">Published</option>
+                <option value="draft">Draft</option>
               </select>
             </div>
           </div>
 
-          <label className="form-label mt-3">Excerpt</label>
-          <textarea
-            className="form-control"
-            rows={3}
-            value={excerpt}
-            onChange={(e) => setExcerpt(e.target.value)}
-            placeholder="Short preview text for cards"
-          />
-
-          <label className="form-label mt-3">Markdown Content</label>
-          <div className="d-flex gap-2 mb-2 flex-wrap">
-            <button type="button" className="btn btn-outline-light btn-sm" onClick={() => wrapSelection('## ')}>H2</button>
-            <button type="button" className="btn btn-outline-light btn-sm" onClick={() => wrapSelection('**', '**')}>Bold</button>
-            <button type="button" className="btn btn-outline-light btn-sm" onClick={() => wrapSelection('*', '*')}>Italic</button>
-            <button type="button" className="btn btn-outline-light btn-sm" onClick={() => wrapSelection('`', '`')}>Code</button>
-            <button type="button" className="btn btn-outline-light btn-sm" onClick={() => wrapSelection('\n- ')}>List</button>
-            <button type="button" className="btn btn-outline-light btn-sm" onClick={() => wrapSelection('[text](https://example.com)')}>Link</button>
+          <div className={styles.field}>
+            <label className={styles.label}>Excerpt</label>
+            <textarea
+              className={styles.textarea}
+              rows={3}
+              value={excerpt}
+              onChange={(e) => setExcerpt(e.target.value)}
+              placeholder="Short preview text for cards"
+            />
           </div>
-          <textarea
-            ref={textRef}
-            className="form-control"
-            rows={18}
-            value={markdown}
-            onChange={(e) => setMarkdown(e.target.value)}
-            placeholder="# Headline\n\nWrite your content here..."
-          />
+
+          <div className={styles.field}>
+            <label className={styles.label}>Markdown Content</label>
+            <div className={styles.toolbar}>
+              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('## ')}>H2</button>
+              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('**', '**')}>Bold</button>
+              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('*', '*')}>Italic</button>
+              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('`', '`')}>Code</button>
+              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('\n- ')}>List</button>
+              <button type="button" className={styles.toolbarBtn} onClick={() => wrapSelection('[text](https://example.com)')}>Link</button>
+              <button type="button" className={styles.mediaBtnToolbar} onClick={() => setIsMediaPickerOpen(true)}>🖼️ Insert Media</button>
+            </div>
+            <textarea
+              ref={textRef}
+              className={styles.markdownArea}
+              rows={18}
+              value={markdown}
+              onChange={(e) => setMarkdown(e.target.value)}
+              placeholder={'# Headline\n\nWrite your content here...'}
+            />
+          </div>
         </div>
 
-        <div className="col-12 col-lg-4">
-          <label className="form-label">Edit Existing Post</label>
-          <select
-            className="form-select"
-            value={selectedPostId ?? ''}
-            onChange={(e) => void loadPost(e.target.value)}
-            disabled={isLoadingPost}
-          >
-            <option value="">Create new post</option>
-            {existingPosts.map((post) => (
-              <option key={post.id} value={post.id}>
-                #{post.id} {post.title} ({post.post_type}/{post.status})
-              </option>
-            ))}
-          </select>
-
-          <div className="d-flex gap-2 mt-2">
-            <button className="btn btn-outline-light btn-sm" type="button" onClick={() => void refreshExistingPosts()}>
-              Refresh list
-            </button>
-            <button className="btn btn-outline-light btn-sm" type="button" onClick={clearForm}>
-              New post
-            </button>
+        {/* ── Right column: settings ── */}
+        <div>
+          <div className={styles.sideCard}>
+            <h5>Edit Existing Post</h5>
+            <select
+              className={styles.select}
+              value={selectedPostId ?? ''}
+              onChange={(e) => void loadPost(e.target.value)}
+              disabled={isLoadingPost}
+            >
+              <option value="">— Create new post —</option>
+              {existingPosts.map((post) => (
+                <option key={post.id} value={post.id}>
+                  #{post.id} {post.title} ({post.post_type}/{post.status})
+                </option>
+              ))}
+            </select>
+            <div className={styles.btnRow}>
+              <button className={styles.btnGhost} type="button" onClick={() => void refreshExistingPosts()}>
+                Refresh list
+              </button>
+              <button className={styles.btnGhost} type="button" onClick={clearForm}>
+                New post
+              </button>
+            </div>
           </div>
 
-          <label className="form-label">Post Type</label>
-          <select className="form-select" value={postType} onChange={(e) => setPostType(e.target.value)}>
-            {postTypes.map((type) => (
-              <option key={type.slug} value={type.slug}>
-                {type.label} ({type.slug})
-              </option>
-            ))}
-          </select>
+          <div className={styles.field}>
+            <label className={styles.label}>Post Type</label>
+            <select className={styles.select} value={postType} onChange={(e) => setPostType(e.target.value)}>
+              {postTypes.map((type) => (
+                <option key={type.slug} value={type.slug}>
+                  {type.label} ({type.slug})
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <div className="card mt-3 p-3">
-            <h5 className="mb-2">Add New Post Type</h5>
-            <input
-              className="form-control mb-2"
-              placeholder="slug (e.g. article)"
-              value={newTypeSlug}
-              onChange={(e) => setNewTypeSlug(e.target.value)}
-            />
-            <input
-              className="form-control mb-2"
-              placeholder="label (e.g. Article)"
-              value={newTypeLabel}
-              onChange={(e) => setNewTypeLabel(e.target.value)}
-            />
-            <button className="btn btn-outline-light" type="button" onClick={createPostType}>
+          <div className={styles.sideCard}>
+            <h5>Add New Post Type</h5>
+            <div className={styles.field}>
+              <input
+                className={styles.input}
+                placeholder="slug (e.g. article)"
+                value={newTypeSlug}
+                onChange={(e) => setNewTypeSlug(e.target.value)}
+              />
+            </div>
+            <div className={styles.field}>
+              <input
+                className={styles.input}
+                placeholder="label (e.g. Article)"
+                value={newTypeLabel}
+                onChange={(e) => setNewTypeLabel(e.target.value)}
+              />
+            </div>
+            <button className={styles.btnGhost} type="button" onClick={createPostType}>
               Add Type
             </button>
           </div>
 
-          <label className="form-label mt-3">Tags (comma-separated)</label>
-          <input
-            className="form-control"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
-            placeholder="nextjs,sqlite,portfolio"
-          />
-
-          <label className="form-label mt-3">Cover Image URL</label>
-          <input
-            className="form-control"
-            value={coverImage}
-            onChange={(e) => setCoverImage(e.target.value)}
-            placeholder="/uploads/2026/03/my-cover.webp"
-          />
-
-          <div className="card mt-3 p-3">
-            <h5 className="mb-2">Media Upload</h5>
-            <input ref={uploadRef} className="form-control" type="file" multiple />
-            <button
-              type="button"
-              className="btn btn-outline-light mt-2"
-              onClick={uploadFiles}
-              disabled={isUploading}
-            >
-              {isUploading ? 'Uploading...' : 'Upload + Insert Markdown'}
-            </button>
-            <small style={{ opacity: 0.7 }} className="mt-2 d-block">
-              Uploaded files go to /public/uploads/YYYY/MM.
-            </small>
+          <div className={styles.field}>
+            <label className={styles.label}>Tags (comma-separated)</label>
+            <input
+              className={styles.input}
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              placeholder="nextjs, sqlite, portfolio"
+            />
           </div>
 
-          <div className="card mt-3 p-3">
-            <p className="mb-2"><strong>Preview URL slug:</strong> {previewSlug || '(empty)'}</p>
-            <button className="btn btn-success" type="button" onClick={savePost} disabled={isSaving}>
-              {isSaving ? (isEditMode ? 'Updating...' : 'Saving...') : (isEditMode ? 'Update Post' : 'Save Post')}
+          <div className={styles.field}>
+            <label className={styles.label}>Cover Image URL</label>
+            <input
+              className={styles.input}
+              value={coverImage}
+              onChange={(e) => setCoverImage(e.target.value)}
+              placeholder="/uploads/2026/03/my-cover.webp"
+            />
+          </div>
+
+          <div className={styles.sideCard}>
+            <h5>Media Upload</h5>
+            <input className={styles.input} type="file" ref={uploadRef} multiple />
+            <div className={styles.btnRow}>
+              <button
+                type="button"
+                className={styles.btnGhost}
+                onClick={uploadFiles}
+                disabled={isUploading}
+              >
+                {isUploading ? 'Uploading…' : 'Upload + Insert Markdown'}
+              </button>
+            </div>
+            <span className={styles.uploadHint}>Files go to /public/uploads/YYYY/MM</span>
+          </div>
+
+          <div className={styles.sideCard}>
+            <p className={styles.slugPreview}>
+              <strong>Slug preview:</strong> {previewSlug || '(empty)'}
+            </p>
+            <button className={styles.btnPrimary} type="button" onClick={savePost} disabled={isSaving}>
+              {isSaving ? (isEditMode ? 'Updating…' : 'Saving…') : (isEditMode ? 'Update Post' : 'Save Post')}
             </button>
             {isEditMode && (
               <button
-                className="btn btn-danger mt-2"
+                className={styles.btnDanger}
                 type="button"
                 onClick={deletePost}
                 disabled={isDeleting}
               >
-                {isDeleting ? 'Deleting...' : 'Delete Post'}
+                {isDeleting ? 'Deleting…' : 'Delete Post'}
               </button>
             )}
           </div>
 
           {message && (
-            <div className="alert alert-info mt-3" role="alert">
-              {message}
-            </div>
+            <div className={styles.message}>{message}</div>
           )}
         </div>
       </div>
+
+      <MediaPicker
+        isOpen={isMediaPickerOpen}
+        onClose={() => setIsMediaPickerOpen(false)}
+        onSelectMedia={handleMediaSelected}
+        postId={selectedPostId || undefined}
+      />
     </main>
   );
 }

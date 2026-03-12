@@ -35,15 +35,15 @@ export default function LifePage() {
     id: 0,
     title: 'Life',
     excerpt: 'Take a journey through the time slide.',
-    content: '',
+    content: 'Take a journey through the time slide.',
   });
 
   // Add end card
   cards.push({
     id: -1,
-    title: 'The End',
+    title: 'What\'s next?',
     excerpt: 'Back to Home',
-    content: '',
+    content: 'Back to Home',
   });
 
   const cardCount = cards.length;

@@ -371,3 +371,214 @@ export function updateProject(
 export function deleteProject(id: number) {
   return getDb().prepare("DELETE FROM posts WHERE id = ? AND post_type = 'project'").run(id);
 }
+
+// ── Media & Post Association Queries ────────────────────────────────────────
+
+export type MediaRecord = {
+  id: number;
+  post_id: number | null;
+  original_name: string;
+  file_path: string;
+  media_kind: 'image' | 'video' | 'audio' | 'document' | 'other';
+  mime_type: string;
+  size_bytes: number;
+  alt_text: string;
+  created_at: string;
+};
+
+export type MediaWithUsage = MediaRecord & {
+  usage_count: number;
+};
+
+export type PostSummaryWithStats = {
+  id: number;
+  title: string;
+  slug: string;
+  post_type: string;
+  status: string;
+  cover_image: string | null;
+  updated_at: string;
+  created_at: string;
+};
+
+export type PostWithMediaUsage = {
+  id: number;
+  title: string;
+  slug: string;
+  post_type: string;
+};
+
+/**
+ * Get all media records associated with a specific post.
+ */
+export function getMediaByPost(postId: number) {
+  return getDb()
+    .prepare(
+      `SELECT
+        id,
+        post_id,
+        original_name,
+        file_path,
+        media_kind,
+        mime_type,
+        size_bytes,
+        alt_text,
+        created_at
+      FROM post_media
+      WHERE post_id = ?
+      ORDER BY created_at DESC`
+    )
+    .all(postId) as MediaRecord[];
+}
+
+/**
+ * Get all posts that use a specific media file.
+ */
+export function getPostsByMedia(mediaId: number) {
+  return getDb()
+    .prepare(
+      `SELECT
+        p.id,
+        p.title,
+        p.slug,
+        p.post_type
+      FROM posts p
+      INNER JOIN post_media pm ON p.id = pm.post_id
+      WHERE pm.id = ?
+      ORDER BY p.updated_at DESC`
+    )
+    .all(mediaId) as PostWithMediaUsage[];
+}
+
+/**
+ * Get all media files with their usage count (number of posts using them).
+ */
+export function getAllMediaWithUsage() {
+  return getDb()
+    .prepare(
+      `SELECT
+        pm.id,
+        pm.post_id,
+        pm.original_name,
+        pm.file_path,
+        pm.media_kind,
+        pm.mime_type,
+        pm.size_bytes,
+        pm.alt_text,
+        pm.created_at,
+        COUNT(DISTINCT p.id) as usage_count
+      FROM post_media pm
+      LEFT JOIN posts p ON pm.file_path IN (
+        SELECT SUBSTR(
+          pm2.file_path,
+          1,
+          LENGTH(pm2.file_path)
+        ) FROM post_media pm2
+      )
+      GROUP BY pm.id
+      ORDER BY pm.created_at DESC`
+    )
+    .all() as Array<MediaWithUsage>;
+}
+
+/**
+ * Alternative simpler version: Get all media with basic usage tracking via post_id association.
+ * This only counts direct post_id associations, not URLs embedded in markdown.
+ */
+export function getAllMediaWithUsageSimple() {
+  return getDb()
+    .prepare(
+      `SELECT
+        pm.id,
+        pm.post_id,
+        pm.original_name,
+        pm.file_path,
+        pm.media_kind,
+        pm.mime_type,
+        pm.size_bytes,
+        pm.alt_text,
+        pm.created_at,
+        COUNT(*) OVER (PARTITION BY pm.file_path) as usage_count
+      FROM post_media pm
+      GROUP BY pm.id
+      ORDER BY pm.created_at DESC`
+    )
+    .all() as Array<MediaWithUsage>;
+}
+
+/**
+ * Count how many posts reference a specific media file.
+ */
+export function countMediaUsage(mediaId: number): number {
+  const row = getDb()
+    .prepare(
+      `SELECT COUNT(*) as count
+      FROM posts p
+      INNER JOIN post_media pm ON p.id = pm.post_id
+      WHERE pm.id = ?`
+    )
+    .get(mediaId) as { count: number };
+
+  return row.count;
+}
+
+/**
+ * Get all posts with summary statistics (for dashboard overview).
+ */
+export function getPostsWithStats() {
+  return getDb()
+    .prepare(
+      `SELECT
+        id,
+        title,
+        slug,
+        post_type,
+        status,
+        cover_image,
+        updated_at,
+        created_at
+      FROM posts
+      ORDER BY updated_at DESC`
+    )
+    .all() as PostSummaryWithStats[];
+}
+
+/**
+ * Get a single media record by ID.
+ */
+export function getMediaRecord(mediaId: number) {
+  return getDb()
+    .prepare(
+      `SELECT
+        id,
+        post_id,
+        original_name,
+        file_path,
+        media_kind,
+        mime_type,
+        size_bytes,
+        alt_text,
+        created_at
+      FROM post_media
+      WHERE id = ?`
+    )
+    .get(mediaId) as MediaRecord | undefined;
+}
+
+/**
+ * Update alt_text for a media record.
+ */
+export function updateMediaAltText(mediaId: number, altText: string) {
+  return getDb()
+    .prepare('UPDATE post_media SET alt_text = ? WHERE id = ?')
+    .run(altText, mediaId);
+}
+
+/**
+ * Delete a media record from the database.
+ */
+export function deleteMediaRecord(mediaId: number) {
+  return getDb()
+    .prepare('DELETE FROM post_media WHERE id = ?')
+    .run(mediaId);
+}

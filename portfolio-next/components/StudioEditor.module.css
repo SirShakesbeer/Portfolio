@@ -1,0 +1,270 @@
+.editor {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.heading {
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.subtext {
+  opacity: 0.65;
+  font-size: 0.95rem;
+  margin: 0 0 2rem;
+  line-height: 1.4;
+}
+
+/* ── Two-column layout ─────────────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Field wrappers ────────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+
+/* ── Inputs, selects, textareas ────────────────────────────── */
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--highlight-text-color);
+  background: rgba(255, 255, 255, 0.11);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(251, 251, 255, 0.35);
+}
+
+.select option {
+  background: #0b4f6c;
+  color: var(--text-color);
+}
+
+/* ── Markdown toolbar ──────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.toolbarBtn {
+  padding: 0.28rem 0.65rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 4px;
+  color: var(--text-color);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.toolbarBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.mediaBtnToolbar {
+  padding: 0.28rem 0.7rem;
+  background: rgba(136, 206, 2, 0.12);
+  border: 1px solid rgba(136, 206, 2, 0.55);
+  border-radius: 4px;
+  color: var(--highlight-text-color);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.mediaBtnToolbar:hover {
+  background: rgba(136, 206, 2, 0.22);
+}
+
+/* ── Markdown textarea ─────────────────────────────────────── */
+.markdownArea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: var(--text-color);
+  font-family: 'Fira Mono', 'Consolas', 'Courier New', monospace;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+.markdownArea:focus {
+  outline: none;
+  border-color: var(--highlight-text-color);
+}
+
+.markdownArea::placeholder {
+  color: rgba(251, 251, 255, 0.3);
+}
+
+/* ── Sidebar ───────────────────────────────────────────────── */
+.sideCard {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.sideCard h5 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.6;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Buttons ───────────────────────────────────────────────── */
+.btnGhost {
+  padding: 0.4rem 0.9rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 5px;
+  color: var(--text-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btnGhost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.btnGhost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnPrimary {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: var(--highlight-text-color);
+  border: none;
+  border-radius: 5px;
+  color: #111;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btnDanger {
+  width: 100%;
+  padding: 0.55rem 1rem;
+  margin-top: 0.5rem;
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.6);
+  border-radius: 5px;
+  color: #fca5a5;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btnDanger:hover:not(:disabled) {
+  background: rgba(220, 38, 38, 0.28);
+}
+
+.btnDanger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnRow {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* ── Misc ──────────────────────────────────────────────────── */
+.slugPreview {
+  font-size: 0.8rem;
+  opacity: 0.55;
+  margin-bottom: 0.75rem;
+  word-break: break-all;
+}
+
+.message {
+  margin-top: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: rgba(136, 206, 2, 0.1);
+  border: 1px solid rgba(136, 206, 2, 0.4);
+  border-radius: 6px;
+  font-size: 0.88rem;
+  color: var(--highlight-text-color);
+  line-height: 1.5;
+}
+
+.uploadHint {
+  font-size: 0.78rem;
+  opacity: 0.5;
+  margin-top: 0.4rem;
+  display: block;
+}
